@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neural Network Scroll Animation</title>
+    <style>
+        body {
+            margin: 0;
+            overflow-x: hidden;
+            background: black;
+            height: 500vh; /* Make page scrollable */
+        }
+
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+        }
+
+        canvas {
+            display: block;
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-family: Arial, sans-serif;
+            opacity: 0.7;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.7; }
+            50% { opacity: 0.3; }
+            100% { opacity: 0.7; }
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas-container">
+        <canvas id="networkCanvas"></canvas>
+    </div>
+    <div class="scroll-indicator">Scroll to explore</div>
+
+    <script>
+        const canvas = document.getElementById('networkCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Set canvas size
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Particle class with z-position
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = (Math.random() - 0.5) * canvas.width * 3;
+                this.y = (Math.random() - 0.5) * canvas.height * 3;
+                this.z = Math.random() * 2000;
+                this.radius = Math.random() * 2 + 1;
+                this.color = `rgba(255, 255, 255, ${Math.random() * 0.5 + 0.5})`;
+            }
+        }
+
+        // Create particles
+        const particles = Array(200).fill().map(() => new Particle());
+        let speed = 0;
+        let targetSpeed = 0;
+        const maxSpeed = 20;
+
+        // Handle scroll
+        let lastScrollTop = window.pageYOffset;
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset;
+            const scrollDelta = scrollTop - lastScrollTop;
+            
+            // Adjust target speed based on scroll direction
+            targetSpeed = Math.max(-maxSpeed, Math.min(maxSpeed, scrollDelta));
+            
+            lastScrollTop = scrollTop;
+        });
+
+        // Animation loop
+        function animate() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Smoothly adjust speed
+            speed += (targetSpeed - speed) * 0.1;
+            targetSpeed *= 0.95; // Decay target speed
+
+            particles.forEach(particle => {
+                // Move particle along z-axis
+                particle.z -= speed;
+
+                // Reset particle if it goes too far
+                if (particle.z <= 1) {
+                    particle.reset();
+                    particle.z = 2000;
+                } else if (particle.z > 2000) {
+                    particle.reset();
+                    particle.z = 1;
+                }
+
+                // Project 3D position to 2D screen
+                const scale = 400 / particle.z;
+                const x2d = particle.x * scale + canvas.width / 2;
+                const y2d = particle.y * scale + canvas.height / 2;
+                const r = particle.radius * scale;
+
+                // Draw particle
+                const alpha = Math.min(1, (2000 - particle.z) / 1000);
+                ctx.beginPath();
+                ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+                ctx.arc(x2d, y2d, r, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Optional: Draw connections between nearby particles
+                particles.forEach(other => {
+                    const dx = x2d - (other.x * 400 / other.z + canvas.width / 2);
+                    const dy = y2d - (other.y * 400 / other.z + canvas.height / 2);
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 100 && Math.abs(particle.z - other.z) < 200) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${alpha * 0.2})`;
+                        ctx.lineWidth = Math.min(2, r / 2);
+                        ctx.moveTo(x2d, y2d);
+                        ctx.lineTo(
+                            other.x * 400 / other.z + canvas.width / 2,
+                            other.y * 400 / other.z + canvas.height / 2
+                        );
+                        ctx.stroke();
+                    }
+                });
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+AuthType shibboleth
+ShibRequireSession On
+ShibRedirectToSSL 443
+require uniqueID 4050819@ethz.ch
+
+AddType application/javascript .js
+AddType text/css .css
+AddType model/gltf+json .gltf
+AddType model/gltf-binary .glb
+
+<Files "*.js">
+    ForceType application/javascript
+</Files>
+
+<Files "*.css">
+    ForceType text/css
+</Files>
+
+<Files "*.glb">
+    ForceType model/gltf-binary
+</Files>

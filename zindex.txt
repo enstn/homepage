@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neural Network with Brain Transition</title>
+    <style>
+        body {
+            margin: 0;
+            overflow-x: hidden;
+            background: #000000;
+            height: 500vh;
+        }
+
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #000000;
+        }
+
+        #brain-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+        }
+
+        #brain-svg {
+            width: 400px;
+            height: 400px;
+            opacity: 1;
+            transition: opacity 1s;
+        }
+
+        canvas {
+            display: block;
+            background: #000000;
+            opacity: 0;
+            transition: opacity 1s;
+            z-index: 1;
+        }
+
+        .visible {
+            opacity: 1 !important;
+        }
+
+        .hidden {
+            opacity: 0 !important;
+            pointer-events: none;
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-family: Arial, sans-serif;
+            opacity: 0.7;
+            animation: pulse 2s infinite;
+            z-index: 3;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.7; }
+            50% { opacity: 0.3; }
+            100% { opacity: 0.7; }
+        }
+    </style>
+</head>
+<body>
+    <div id="brain-container">
+        <svg id="brain-svg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="brainGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.8"/>
+                    <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0.2"/>
+                </linearGradient>
+            </defs>
+        
+            <!-- Left Hemisphere -->
+            <path d="M200 80
+                     C 160 80, 130 110, 120 150
+                     C 110 190, 120 220, 140 240
+                     C 160 260, 180 270, 200 280"
+                  fill="none"
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-dasharray="5,5">
+                <animate 
+                    attributeName="stroke-dasharray" 
+                    from="0,1000"
+                    to="1000,0"
+                    dur="3s"
+                    fill="freeze"/>
+            </path>
+        
+            <!-- Right Hemisphere -->
+            <path d="M200 80
+                     C 240 80, 270 110, 280 150
+                     C 290 190, 280 220, 260 240
+                     C 240 260, 220 270, 200 280"
+                  fill="none"
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-dasharray="5,5">
+                <animate 
+                    attributeName="stroke-dasharray" 
+                    from="0,1000"
+                    to="1000,0"
+                    dur="3s"
+                    fill="freeze"/>
+            </path>
+        
+            <!-- Left Hemisphere Folds -->
+            <path d="M140 160
+                     C 130 170, 140 190, 160 180
+                     C 170 170, 150 150, 140 160
+                     M160 200
+                     C 150 210, 160 230, 180 220
+                     C 190 210, 170 190, 160 200"
+                  fill="none"
+                  stroke="white"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round">
+                <animate 
+                    attributeName="stroke-dasharray" 
+                    from="0,500"
+                    to="500,0"
+                    dur="3s"
+                    fill="freeze"/>
+            </path>
+        
+            <!-- Right Hemisphere Folds -->
+            <path d="M260 160
+                     C 270 170, 260 190, 240 180
+                     C 230 170, 250 150, 260 160
+                     M240 200
+                     C 250 210, 240 230, 220 220
+                     C 210 210, 230 190, 240 200"
+                  fill="none"
+                  stroke="white"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round">
+                <animate 
+                    attributeName="stroke-dasharray" 
+                    from="0,500"
+                    to="500,0"
+                    dur="3s"
+                    fill="freeze"/>
+            </path>
+        </svg>
+    </div>
+
+    <div id="canvas-container">
+        <canvas id="networkCanvas"></canvas>
+    </div>
+    
+    <div class="scroll-indicator">Scroll to explore</div>
+
+    <script>
+        const canvas = document.getElementById('networkCanvas');
+        const ctx = canvas.getContext('2d');
+        const brainContainer = document.getElementById('brain-container');
+        let isScrolling = false;
+        let scrollTimeout;
+
+        // Initialize canvas size
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Start transition sequence
+        setTimeout(() => {
+            brainContainer.classList.add('hidden');
+            canvas.classList.add('visible');
+        }, 2000);
+
+        // Your existing Particle class and animation code
+        class Particle {
+            constructor() {
+                this.reset();
+                this.isGithub = false;
+            }
+
+            reset() {
+                this.x = (Math.random() - 0.5) * canvas.width * 3;
+                this.y = (Math.random() - 0.5) * canvas.height * 3;
+                this.z = Math.random() * 2000;
+                this.radius = Math.random() * 2 + 1;
+                this.brightness = Math.random() * 0.5 + 0.5;
+                this.color = `rgba(255, 255, 255, ${this.brightness})`;
+            }
+
+            draw(x2d, y2d, scale, alpha) {
+                const r = this.radius * scale;
+                
+                const gradient = ctx.createRadialGradient(x2d, y2d, 0, x2d, y2d, r * 2);
+                
+                if (this.isGithub) {
+                    gradient.addColorStop(0, `rgba(100, 200, 255, ${alpha})`);
+                    gradient.addColorStop(0.4, `rgba(100, 200, 255, ${alpha * 0.6})`);
+                    gradient.addColorStop(1, `rgba(100, 200, 255, 0)`);
+                } else {
+                    gradient.addColorStop(0, `rgba(255, 255, 255, ${alpha})`);
+                    gradient.addColorStop(0.4, `rgba(255, 255, 255, ${alpha * 0.6})`);
+                    gradient.addColorStop(1, `rgba(255, 255, 255, 0)`);
+                }
+
+                ctx.beginPath();
+                ctx.fillStyle = gradient;
+                ctx.arc(x2d, y2d, r * 2, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.fillStyle = this.isGithub ? `rgba(100, 200, 255, ${alpha})` : `rgba(255, 255, 255, ${alpha})`;
+                ctx.arc(x2d, y2d, r, 0, Math.PI * 2);
+                ctx.fill();
+
+                if (this.isGithub) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = `rgba(100, 200, 255, ${alpha})`;
+                    ctx.lineWidth = 2;
+                    ctx.arc(x2d, y2d, r * 1.5, 0, Math.PI * 2);
+                    ctx.stroke();
+                }
+            }
+        }
+
+        const particles = Array(200).fill().map(() => new Particle());
+        const githubNode = particles[0];
+        githubNode.isGithub = true;
+        githubNode.radius = 3;
+        githubNode.z = 500;
+
+        let speed = 0;
+        let targetSpeed = 0;
+        const maxSpeed = 20;
+
+        let lastScrollTop = window.pageYOffset;
+        window.addEventListener('scroll', () => {
+            isScrolling = true;
+            clearTimeout(scrollTimeout);
+            
+            const scrollTop = window.pageYOffset;
+            const scrollDelta = scrollTop - lastScrollTop;
+            targetSpeed = Math.max(-maxSpeed, Math.min(maxSpeed, scrollDelta));
+            lastScrollTop = scrollTop;
+
+            scrollTimeout = setTimeout(() => {
+                isScrolling = false;
+            }, 150);
+        });
+
+        canvas.addEventListener('click', (event) => {
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = event.clientX - rect.left;
+            const mouseY = event.clientY - rect.top;
+
+            particles.forEach(particle => {
+                if (!particle.isGithub) return;
+
+                const scale = 400 / particle.z;
+                const x2d = particle.x * scale + canvas.width / 2;
+                const y2d = particle.y * scale + canvas.height / 2;
+                const r = particle.radius * scale * 2;
+
+                const dx = mouseX - x2d;
+                const dy = mouseY - y2d;
+                if (dx * dx + dy * dy < r * r) {
+                    window.open('https://github.com/enstn', '_blank');
+                }
+            });
+        });
+
+        canvas.addEventListener('mousemove', (event) => {
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = event.clientX - rect.left;
+            const mouseY = event.clientY - rect.top;
+
+            let isOverClickable = false;
+            particles.forEach(particle => {
+                if (!particle.isGithub) return;
+
+                const scale = 400 / particle.z;
+                const x2d = particle.x * scale + canvas.width / 2;
+                const y2d = particle.y * scale + canvas.height / 2;
+                const r = particle.radius * scale * 2;
+
+                const dx = mouseX - x2d;
+                const dy = mouseY - y2d;
+                if (dx * dx + dy * dy < r * r) {
+                    isOverClickable = true;
+                }
+            });
+
+            canvas.style.cursor = isOverClickable ? 'pointer' : 'default';
+        });
+
+        function animate() {
+            ctx.fillStyle = isScrolling ? 'rgba(0, 0, 0, 0.1)' : 'rgba(0, 0, 0, 1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            speed += (targetSpeed - speed) * 0.1;
+            targetSpeed *= 0.95;
+
+            particles.forEach(particle => {
+                particle.z -= speed;
+
+                if (particle.z <= 1) {
+                    particle.reset();
+                    particle.z = 2000;
+                } else if (particle.z > 2000) {
+                    particle.reset();
+                    particle.z = 1;
+                }
+
+                const scale = 400 / particle.z;
+                const x2d = particle.x * scale + canvas.width / 2;
+                const y2d = particle.y * scale + canvas.height / 2;
+
+                const alpha = Math.min(1, (2000 - particle.z) / 1000);
+                particle.draw(x2d, y2d, scale, alpha);
+
+                particles.forEach(other => {
+                    const dx = x2d - (other.x * 400 / other.z + canvas.width / 2);
+                    const dy = y2d - (other.y * 400 / other.z + canvas.height / 2);
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 100 && Math.abs(particle.z - other.z) < 200) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${alpha * 0.2})`;
+                        ctx.lineWidth = Math.min(2, particle.radius * scale / 2);
+                        ctx.moveTo(x2d, y2d);
+                        ctx.lineTo(
+                            other.x * 400 / other.z + canvas.width / 2,
+                            other.y * 400 / other.z + canvas.height / 2
+                        );
+                        ctx.stroke();
+                    }
+                });
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+</body>
+</html>

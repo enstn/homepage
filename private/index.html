@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neural Network with Brain Transition</title>
+    <style>
+        body {
+            margin: 0;
+            overflow-x: hidden;
+            background: #000000;
+            height: 500vh;
+            font-family: Arial, sans-serif;
+        }
+
+        #brain-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+        }
+
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #000000;
+        }
+
+        #networkCanvas {
+            display: block;
+            background: #000000;
+            opacity: 0;
+            transition: opacity 1s;
+            z-index: 1;
+        }
+
+        #loading-indicator {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-family: Arial, sans-serif;
+            z-index: 10;
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            opacity: 0.7;
+            animation: pulse 2s infinite;
+            z-index: 3;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.7; }
+            50% { opacity: 0.3; }
+            100% { opacity: 0.7; }
+        }
+
+        .visible {
+            opacity: 1 !important;
+        }
+
+        .hidden {
+            opacity: 0 !important;
+            pointer-events: none;
+        }
+
+        #brain-container canvas {
+            opacity: 1 !important;
+        }
+    </style>
+</head>
+<body>
+    <div id="loading-indicator">Loading...</div>
+    <div id="brain-container"></div>
+    <div id="canvas-container">
+        <canvas id="networkCanvas"></canvas>
+    </div>
+    <div class="scroll-indicator">Click brain to explore</div>
+
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <!-- Three.js and main script -->
+    <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.153.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.153.0/examples/jsm/"
+        }
+    }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+        window.THREE = THREE;
+        window.GLTFLoader = GLTFLoader;
+
+        // Wait for main.js to load
+        async function initializeApp() {
+            try {
+                // Load main.js content
+                const response = await fetch('main.js');
+                const mainJs = await response.text();
+                
+                // Create and execute script
+                const script = document.createElement('script');
+                script.textContent = mainJs;
+                document.body.appendChild(script);
+
+                // Initialize canvas
+                const canvas = document.getElementById('networkCanvas');
+                if (canvas) {
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                }
+
+                // Initialize visualization after script is loaded
+                const brainVis = new BrainVisualization();
+            } catch (error) {
+                console.error('Error initializing app:', error);
+            }
+        }
+
+        // Start initialization when document is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeApp);
+        } else {
+            initializeApp();
+        }
+    </script>
+</body>
+</html>
