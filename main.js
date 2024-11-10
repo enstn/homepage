@@ -2,11 +2,18 @@
 class Particle {
     constructor(initialPosition = null) {
         this.reset(initialPosition);
-        this.isGithub = false;
         this.transitioning = !!initialPosition;
+
+        // stuff for project nodes
+        this.isGithub = false;
+        this.fixed = false;
+        this.pulsePhase = 0;
     }
 
     reset(initialPosition = null) {
+        // return directly so project nodes stay fixed
+        if (this.fixed) return;
+
         if (initialPosition) {
             // Start from brain node position
             this.x = initialPosition.x * window.innerWidth / 2;
@@ -18,27 +25,44 @@ class Particle {
             this.y = (Math.random() - 0.5) * window.innerHeight * 3;
             this.z = Math.random() * 2000;
         }
-        this.targetX = (Math.random() - 0.5) * window.innerWidth * 3;
-        this.targetY = (Math.random() - 0.5) * window.innerHeight * 3;
-        this.targetZ = Math.random() * 2000;
+
+        // coordinate init
+        // this.targetX = (Math.random() - 0.5) * window.innerWidth * 3;
+        // this.targetY = (Math.random() - 0.5) * window.innerHeight * 3;
+        // this.targetZ = Math.random() * 2000;
+
+        // some kind of more sophisticated coord init with angles(??)
+        const angle = Math.random() * Math.PI * 2;
+        const radius = Math.random() * window.innerWidth / 4;
+        this.targetX = Math.cos(angle) * radius;
+        this.targetY = Math.sin(angle) * radius;
+        this.targetZ = 1000 + Math.random() * 500;
         
         this.radius = Math.random() * 2 + 1;
-        this.brightness = Math.random() * 0.5 + 0.5;
+        this.brightness = Math.random() * 0.5 + 0.8; // maybe even brighter? depends on max value
         this.color = `rgba(255, 255, 255, ${this.brightness})`;
     }
 
     update() {
         if (this.transitioning) {
-            // Smooth transition to target position
-            this.x += (this.targetX - this.x) * 0.02;
-            this.y += (this.targetY - this.y) * 0.02;
-            this.z += (this.targetZ - this.z) * 0.02;
+            // pulse freq for fixed particles : does this not just depend on screen refresh rate?
+            if (this.fixed) {
+                this.pulsePhase += 0.5;
+            }
 
+            // Smooth transition to target position
+            const ease = 0.03;
+            this.x += (this.targetX - this.x) * ease;
+            this.y += (this.targetY - this.y) * ease;
+            this.z += (this.targetZ - this.z) * ease;
+
+            
             // Check if transition is complete
+            const threshold = 0.1;
             const dx = Math.abs(this.x - this.targetX);
             const dy = Math.abs(this.y - this.targetY);
             const dz = Math.abs(this.z - this.targetZ);
-            if (dx < 1 && dy < 1 && dz < 1) {
+            if (dx < threshold && dy < threshold && dz < threshold) {
                 this.transitioning = false;
             }
         }
@@ -49,12 +73,13 @@ class Particle {
         const gradient = ctx.createRadialGradient(x2d, y2d, 0, x2d, y2d, r * 2);
         
         if (this.isGithub) {
+            const pulseIntensity = Math.sin(this.pulsePhase) * 0.3 + 0.7;
             gradient.addColorStop(0, `rgba(100, 200, 255, ${alpha})`);
             gradient.addColorStop(0.4, `rgba(100, 200, 255, ${alpha * 0.6})`);
             gradient.addColorStop(1, `rgba(100, 200, 255, 0)`);
         } else {
             gradient.addColorStop(0, `rgba(255, 255, 255, ${alpha})`);
-            gradient.addColorStop(0.4, `rgba(255, 255, 255, ${alpha * 0.6})`);
+            gradient.addColorStop(0.4, `rgba(255, 255, 255, ${alpha * 0.9})`); // brighter nodes
             gradient.addColorStop(1, `rgba(255, 255, 255, 0)`);
         }
 
@@ -64,7 +89,7 @@ class Particle {
         ctx.fill();
 
         ctx.beginPath();
-        ctx.fillStyle = this.isGithub ? `rgba(100, 200, 255, ${alpha})` : `rgba(255, 255, 255, ${alpha})`;
+        ctx.fillStyle = this.isGithub ? `rgba(255, 50, 50, ${alpha})` : `rgba(255, 255, 255, ${alpha})`; // core
         ctx.arc(x2d, y2d, r, 0, Math.PI * 2);
         ctx.fill();
     }
@@ -81,13 +106,52 @@ class BrainVisualization {
         
         this.container = document.getElementById('brain-container');
         this.isExploding = false;
+        this.isRestoring = false;
+
         this.nodes = []; // Array to store brain surface nodes
+        this.particles = []; // array to store particle nodes
         this.setupScene();
         this.loadBrainModel();
         this.setupEventListeners();
         
         this.animate = this.animate.bind(this);
         this.animate();
+    }
+
+    createBrainMesh() {
+        // Create minimalistic brain mesh using wireframe geometry
+        const geometry = new THREE.IcosahedronGeometry(2, 3);
+        const material = new THREE.ShaderMaterial({
+            vertexShader: vertexShader,
+            fragmentShader: fragmentShader,
+            wireframe: true,
+            uniforms: {
+                uTime: { value: 0 },
+                uPointer: { value: new THREE.Vector3() }
+            }
+        });
+
+        this.brainMesh = new THREE.Mesh(geometry, material);
+        this.scene.add(this.brainMesh);
+
+        // Create nodes at vertices
+        const positions = geometry.attributes.position.array;
+        for (let i = 0; i < positions.length; i += 3) {
+            const nodeGeometry = new THREE.SphereGeometry(0.02, 8, 8);
+            const nodeMaterial = new THREE.MeshBasicMaterial({
+                color: 0x00ff88,
+                transparent: true,
+                opacity: 0.8
+            });
+            const node = new THREE.Mesh(nodeGeometry, nodeMaterial);
+            node.position.set(
+                positions[i],
+                positions[i + 1],
+                positions[i + 2]
+            );
+            this.nodes.push(node);
+            this.scene.add(node);
+        }
     }
 
     setupScene() {
@@ -125,59 +189,61 @@ class BrainVisualization {
         }
     }
 
-    createNodesFromMesh(mesh) {
-        console.log('Creating nodes from brain mesh...');
-        const geometry = mesh.geometry;
-        const positions = geometry.attributes.position.array;
-        const nodeCount = 100; // Number of nodes to create
-        const nodesGroup = new THREE.Group();
-        
-        // Sample vertices from the brain mesh
-        for (let i = 0; i < nodeCount; i++) {
-            // Randomly sample a vertex from the brain mesh
-            const vertexIndex = Math.floor(Math.random() * (positions.length / 3)) * 3;
-            const x = positions[vertexIndex];
-            const y = positions[vertexIndex + 1];
-            const z = positions[vertexIndex + 2];
+    // old create nodes from mesh
 
-            // Create a small sphere for each node
-            const nodeGeometry = new THREE.SphereGeometry(0.02, 8, 8);
-            const nodeMaterial = new THREE.MeshPhongMaterial({
-                color: 0x00ff88,
-                emissive: 0x00ff88,
-                emissiveIntensity: 0.3
-            });
-            const node = new THREE.Mesh(nodeGeometry, nodeMaterial);
-            
-            // Position the node
-            node.position.set(x, y, z);
-            nodesGroup.add(node);
-            this.nodes.push(node);
-        }
-
-        // Add connections between nearby nodes
-        this.nodes.forEach((node, i) => {
-            this.nodes.slice(i + 1).forEach(otherNode => {
-                const distance = node.position.distanceTo(otherNode.position);
-                if (distance < 0.5) { // Adjust this threshold as needed
-                    const lineGeometry = new THREE.BufferGeometry().setFromPoints([
-                        node.position,
-                        otherNode.position
-                    ]);
-                    const lineMaterial = new THREE.LineBasicMaterial({
-                        color: 0x00ff88,
-                        transparent: true,
-                        opacity: 0.2
-                    });
-                    const line = new THREE.Line(lineGeometry, lineMaterial);
-                    nodesGroup.add(line);
-                }
-            });
-        });
-
-        this.nodesGroup = nodesGroup;
-        this.scene.add(nodesGroup);
-    }
+    //createNodesFromMesh(mesh) {
+    //    console.log('Creating nodes from brain mesh...');
+    //    const geometry = mesh.geometry;
+    //    const positions = geometry.attributes.position.array;
+    //    const nodeCount = 100; // Number of nodes to create
+    //    const nodesGroup = new THREE.Group();
+    //    
+    //    // Sample vertices from the brain mesh
+    //    for (let i = 0; i < nodeCount; i++) {
+    //        // Randomly sample a vertex from the brain mesh
+    //        const vertexIndex = Math.floor(Math.random() * (positions.length / 3)) * 3;
+    //        const x = positions[vertexIndex];
+    //        const y = positions[vertexIndex + 1];
+    //        const z = positions[vertexIndex + 2];
+//
+    //        // Create a small sphere for each node
+    //        const nodeGeometry = new THREE.SphereGeometry(0.02, 8, 8);
+    //        const nodeMaterial = new THREE.MeshPhongMaterial({
+    //            color: 0x00ff88,
+    //            emissive: 0x00ff88,
+    //            emissiveIntensity: 0.3
+    //        });
+    //        const node = new THREE.Mesh(nodeGeometry, nodeMaterial);
+    //        
+    //        // Position the node
+    //        node.position.set(x, y, z);
+    //        nodesGroup.add(node);
+    //        this.nodes.push(node);
+    //    }
+//
+    //    // Add connections between nearby nodes
+    //    this.nodes.forEach((node, i) => {
+    //        this.nodes.slice(i + 1).forEach(otherNode => {
+    //            const distance = node.position.distanceTo(otherNode.position);
+    //            if (distance < 0.5) { // Adjust this threshold as needed
+    //                const lineGeometry = new THREE.BufferGeometry().setFromPoints([
+    //                    node.position,
+    //                    otherNode.position
+    //                ]);
+    //                const lineMaterial = new THREE.LineBasicMaterial({
+    //                    color: 0x00ff88,
+    //                    transparent: true,
+    //                    opacity: 0.2
+    //                });
+    //                const line = new THREE.Line(lineGeometry, lineMaterial);
+    //                nodesGroup.add(line);
+    //            }
+    //        });
+    //    });
+//
+    //    this.nodesGroup = nodesGroup;
+    //    this.scene.add(nodesGroup);
+    //}
 
     loadBrainModel() {
         const loader = new window.GLTFLoader();
