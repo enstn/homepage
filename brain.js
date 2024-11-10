@@ -1,16 +1,16 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { gsap } from 'gsap';
+// import { gsap } from 'gsap'
 
 const vertexShader = `
     uniform vec3 uPointer;
+    uniform vec3 uColor;
     uniform float uRotation;
     uniform float uSize;
     uniform float uHover;
-    uniform float uTime;
+    uniform vec3 uHoverColor;
     
-    varying float vDistance;
-    varying vec3 vPosition;
+    varying vec3 vColor;
     
     #define PI 3.14159265359
     
@@ -26,9 +26,8 @@ const vertexShader = `
         
         float d = distance(uPointer, mvPosition.xyz);
         float c = smoothstep(0.45, 0.1, d);
-        vDistance = c; // Pass the distance to fragment shader
         
-        float scale = uSize + c * 8.0 * uHover;
+        float scale = uSize + c * 12.0 * uHover;
         vec3 pos = position;
         pos *= scale;
         
@@ -38,68 +37,44 @@ const vertexShader = `
         mvPosition = instanceMatrix * vec4(pos, 1.0);
         gl_Position = projectionMatrix * modelViewMatrix * mvPosition;
         
-        vPosition = mvPosition.xyz;
+        vColor = mix(uColor, uHoverColor, c * uHover);
     }
 `;
 
 const fragmentShader = `
-    uniform vec3 uBaseColor;
-    uniform vec3 uHoverColor1;
-    uniform vec3 uHoverColor2;
-    uniform vec3 uHoverColor3;
-    uniform float uTime;
-    
-    varying float vDistance;
-    varying vec3 vPosition;
+    varying vec3 vColor;
     
     void main() {
-        // Create dynamic color based on distance and position
-        vec3 finalColor;
-        
-        if (vDistance > 0.0) {
-            // Create a random-looking pattern for color selection
-            float random = fract(sin(dot(vPosition.xy, vec2(12.9898, 78.233)) + uTime) * 43758.5453);
-            
-            if (random < 0.33) {
-                finalColor = mix(uBaseColor, uHoverColor1, vDistance);
-            } else if (random < 0.66) {
-                finalColor = mix(uBaseColor, uHoverColor2, vDistance);
-            } else {
-                finalColor = mix(uBaseColor, uHoverColor3, vDistance);
-            }
-        } else {
-            finalColor = uBaseColor;
-        }
-        
-        gl_FragColor = vec4(finalColor, 1.0);
+        gl_FragColor = vec4(vColor, 1.0);
     }
 `;
 
-class BrainVisualization {
+export class BrainVisualization {
     constructor() {
+        // Initialize all properties in constructor
         this.container = document.getElementById('brain-container');
         this.hover = false;
-        this.colors = {
-            base: new THREE.Color(0xFFFFFF),    // White
-            hover1: new THREE.Color(0xFFD700),   // Gold
-            hover2: new THREE.Color(0xFF4500),   // Red Orange
-            hover3: new THREE.Color(0xFF8C00)    // Dark Orange
-        };
-
+        this.point = new THREE.Vector3();
+        this.mouse = new THREE.Vector2();
+        
+        // Initialize colors
+        this.baseColor = new THREE.Color(0xFFFFFF);
+        this.hoverColors = [
+            new THREE.Color(0xFFD700),  // Gold
+            // new THREE.Color(0xFF4500),  // Red Orange
+            // new THREE.Color(0xFF8C00)   // Dark Orange
+        ];
+        
+        // Initialize uniforms
         this.uniforms = {
             uHover: { value: 0 },
             uPointer: { value: new THREE.Vector3() },
+            uColor: { value: this.baseColor },
+            uHoverColor: { value: new THREE.Color() },
             uRotation: { value: 0 },
-            uSize: { value: 1.0 },
-            uTime: { value: 0 },
-            uBaseColor: { value: this.colors.base },
-            uHoverColor1: { value: this.colors.hover1 },
-            uHoverColor2: { value: this.colors.hover2 },
-            uHoverColor3: { value: this.colors.hover3 }
+            uSize: { value: 1 }
         };
 
-        this.point = new THREE.Vector3();
-        this.animate = this.animate.bind(this)
         this.init();
     }
 
@@ -111,19 +86,26 @@ class BrainVisualization {
         this._createLoader();
         this._checkMobile();
 
-        this._loadModel().then(() => {
-            this._addListeners();
-            this.animate();
-        });
-    }
-
-    _checkMobile() {
-        this.isMobile = window.innerWidth < 767;
+        this._loadModel()
+            .then(() => {
+                this._addListeners();
+                const loadingElement = document.getElementById('loading');  // Add this line
+                if (loadingElement) {                                      // Add this line
+                    loadingElement.style.display = 'none';                 // Add this line
+                }                                                          // Add this line
+                this.animate();
+            })
+            .catch(error => {
+                console.error('Error loading model:', error);
+            });
     }
 
     _createScene() {
         this.scene = new THREE.Scene();
         this.scene.background = new THREE.Color(0x000000);
+
+        // Make the container interactive
+        this.container.style.cursor = 'pointer';
     }
 
     _createCamera() {
@@ -135,36 +117,80 @@ class BrainVisualization {
         this.renderer = new THREE.WebGLRenderer({
             antialias: window.devicePixelRatio === 1
         });
-
         this.container.appendChild(this.renderer.domElement);
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         this.renderer.setPixelRatio(Math.min(1.5, window.devicePixelRatio));
     }
 
-    _createLoader() {
-        this.loadingManager = new THREE.LoadingManager();
-        this.loadingManager.onLoad = () => {
-            document.documentElement.classList.add('model-loaded');
-        };
-        this.gltfLoader = new GLTFLoader(this.loadingManager);
-    }
-
     _createRaycaster() {
-        this.mouse = new THREE.Vector2();
         this.raycaster = new THREE.Raycaster();
         this.intersects = [];
     }
 
+    _createLoader() {
+        this.gltfLoader = new GLTFLoader();
+    }
+
     _loadModel() {
-        return new Promise(resolve => {
-            this.gltfLoader.load('./models/brain.glb', 
-                // onLoad callback
+        return new Promise((resolve, reject) => {
+            this.gltfLoader.load(
+                './models/brain.glb',
                 (gltf) => {
-                    console.log('Brain model loaded successfully');
                     this.brain = gltf.scene.children[0];
-                    this._createInstancedMesh();
+                    // const geometry = new THREE.BoxGeometry(0.004, 0.004, 0.004); // box also looks really cool
+                    // const geometry = new THREE.TetrahedronGeometry(0.003);
+                    const geometry = new THREE.IcosahedronGeometry(0.0009, 0);
+                
                     
-                    // Hide loading indicator
+                    const material = new THREE.ShaderMaterial({
+                        vertexShader,
+                        fragmentShader,
+                        wireframe: true,
+                        uniforms: {
+                            uPointer: { value: new THREE.Vector3() },
+                            uColor: { value: this.baseColor },
+                            uHoverColor: { value: new THREE.Color() },
+                            uRotation: { value: 0 },
+                            uSize: { value: 0 },
+                            uHover: { value: 0 }
+                        }
+                    });
+    
+                    const positions = this.brain.geometry.attributes.position.array;
+                    const instanceCount = positions.length / 3;
+                    
+                    this.instancedMesh = new THREE.InstancedMesh(
+                        geometry,
+                        material,
+                        instanceCount
+                    );
+    
+                    const dummy = new THREE.Object3D();
+    
+                    for (let i = 0; i < positions.length; i += 3) {
+                        dummy.position.set(
+                            positions[i],
+                            positions[i + 1],
+                            positions[i + 2]
+                        );
+    
+                        dummy.updateMatrix();
+                        this.instancedMesh.setMatrixAt(i / 3, dummy.matrix);
+                    }
+    
+                    this.instancedMesh.instanceMatrix.needsUpdate = true;
+    
+                    // Set initial uniforms for all instances
+                    for (let i = 0; i < instanceCount; i++) {
+                        const colorIndex = Math.floor(Math.random() * this.hoverColors.length);
+                        material.uniforms.uHoverColor.value.copy(this.hoverColors[colorIndex]);
+                        material.uniforms.uRotation.value = THREE.MathUtils.randFloat(-1, 1);
+                        material.uniforms.uSize.value = THREE.MathUtils.randFloat(0.3, 3);
+                    }
+    
+                    this.scene.add(this.instancedMesh);
+                    
+                    // Remove loading indicator
                     const loadingIndicator = document.getElementById('loading-indicator');
                     if (loadingIndicator) {
                         loadingIndicator.style.display = 'none';
@@ -172,60 +198,15 @@ class BrainVisualization {
                     
                     resolve();
                 },
-                // onProgress callback
-                (xhr) => {
-                    const loadingIndicator = document.getElementById('loading-indicator');
-                    if (loadingIndicator && xhr.total) {
-                        const percent = (xhr.loaded / xhr.total * 100);
-                        loadingIndicator.textContent = `Loading... ${Math.round(percent)}%`;
-                    }
-                },
-                // onError callback
-                (error) => {
-                    console.error('Error loading brain model:', error);
-                    const loadingIndicator = document.getElementById('loading-indicator');
-                    if (loadingIndicator) {
-                        loadingIndicator.textContent = 'Error loading model';
-                    }
-                }
+                undefined,
+                reject
             );
         });
     }
 
-    _createInstancedMesh() {
-        const geometry = new THREE.BoxGeometry(0.004, 0.004, 0.004);
-        
-        const material = new THREE.ShaderMaterial({
-            vertexShader,
-            fragmentShader,
-            wireframe: true,
-            uniforms: this.uniforms
-        });
-
-        const positions = this.brain.geometry.attributes.position.array;
-        const instanceCount = positions.length / 3;
-        
-        this.instancedMesh = new THREE.InstancedMesh(
-            geometry,
-            material,
-            instanceCount
-        );
-
-        const dummy = new THREE.Object3D();
-
-        for (let i = 0; i < positions.length; i += 3) {
-            dummy.position.set(
-                positions[i],
-                positions[i + 1],
-                positions[i + 2]
-            );
-
-            dummy.updateMatrix();
-            this.instancedMesh.setMatrixAt(i / 3, dummy.matrix);
-        }
-
-        this.instancedMesh.instanceMatrix.needsUpdate = true;
-        this.scene.add(this.instancedMesh);
+    _addListeners() {
+        window.addEventListener('resize', () => this._onResize());
+        window.addEventListener('mousemove', (e) => this._onMousemove(e));
     }
 
     _onMousemove(e) {
@@ -261,20 +242,32 @@ class BrainVisualization {
                 overwrite: true,
                 duration: 0.3,
                 onUpdate: () => {
-                    this.uniforms.uPointer.value.copy(this.point);
+                    this.instancedMesh.material.uniforms.uPointer.value.copy(this.point);
                 }
             });
         }
     }
 
+    _animateHoverUniform(value) {
+        gsap.to(this.instancedMesh.material.uniforms.uHover, {
+            value: value,
+            duration: 0.25
+        });
+    }
+
+    _checkMobile() {
+        this.isMobile = window.innerWidth < 767;
+    }
+
+    _onResize() {
+        this.camera.aspect = window.innerWidth / window.innerHeight;
+        this.camera.updateProjectionMatrix();
+        this.renderer.setSize(window.innerWidth, window.innerHeight);
+        this._checkMobile();
+    }
+
     animate() {
         requestAnimationFrame(() => this.animate());
-        
-        // Update time uniform for dynamic color patterns
-        if (this.uniforms.uTime) {
-            this.uniforms.uTime.value = performance.now() * 0.001;
-        }
-        
         this.camera.lookAt(0, 0, 0);
         this.camera.position.z = this.isMobile ? 2.3 : 1.2;
         this.renderer.render(this.scene, this.camera);
@@ -282,6 +275,6 @@ class BrainVisualization {
 }
 
 // Initialize when document is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    new BrainVisualization();
-});
+// document.addEventListener('DOMContentLoaded', () => {
+//     new BrainVisualization();
+// });

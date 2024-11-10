@@ -3,25 +3,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neural Network Research Portal</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>My Portfolio</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: auto;
+            height: 200vh; /* For scrolling */
+            background: #000000;
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transition: opacity 1s ease;
+        }
+        #brain-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transition: opacity 1s ease;
+            z-index: 2;
+        }
+        #particleCanvas {
+            display: none;
+            opacity: 0;
+            z-index: 1;
+        }
+        #loading-indicator {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-family: Arial, sans-serif;
+            z-index: 10;
+        }
+        .scroll-indicator {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            opacity: 0.7;
+            animation: pulse 2s infinite;
+            z-index: 4;
+        }
+        .info {
+            position: fixed;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Times New Roman', serif;
+            font-size: 36px;
+            font-weight: bold;
+            color: white;
+            opacity: 1;
+            z-index: 4;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.7; }
+            50% { opacity: 0.3; }
+            100% { opacity: 0.7; }
+        }
+    </style>
 </head>
 <body>
-    <div id="loading-indicator">Loading...</div>
+    <!-- Main containers -->
     <div id="brain-container"></div>
+    <canvas id="particleCanvas"></canvas>
     
-    <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    <!-- Loading indicator -->
+    <div id="loading-indicator">Loading visualization...</div>
     
+    <!-- Scroll indicator -->
+    <div class="scroll-indicator">Click the brain to explore</div>
+
+    <!-- Text -->
+    <div class="info">
+        Hello world! This website is still under construction.
+    </div>
+
+    <!-- Load GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
+    <!-- Three.js module configuration -->
+    <script async src="https://unpkg.com/es-module-shims/dist/es-module-shims.js"></script>
     <script type="importmap">
     {
         "imports": {
-            "three": "https://unpkg.com/three@0.153.0/build/three.module.js",
-            "three/addons/": "https://unpkg.com/three@0.153.0/examples/jsm/",
-            "gsap": "https://esm.sh/gsap@3.12.2"
+            "three": "https://unpkg.com/three@0.159.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.159.0/examples/jsm/"
         }
     }
     </script>
 
-    <script type="module" src="main.js"></script>
+    <!-- Main application initialization -->
+    <script type="module">
+        import { BrainVisualization } from './brain.js';
+        import { ParticleNetwork } from './particleNetwork.js';
+        import { TransitionManager } from './transition.js';
+
+        let brainViz, particleNet, transitionManager;
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                // Initialize particle canvas
+                const particleCanvas = document.getElementById('particleCanvas');
+                particleCanvas.width = window.innerWidth;
+                particleCanvas.height = window.innerHeight;
+
+                // Create brain visualization
+                brainViz = new BrainVisualization();
+                console.log('Brain visualization created');
+
+                // Wait for brain to fully initialize
+                await new Promise(resolve => {
+                    const checkBrain = setInterval(() => {
+                    if (brainViz.instancedMesh) {
+                        clearInterval(checkBrain);
+                        resolve();
+                    }
+                }, 100);
+                });
+
+                console.log('Brain mesh is ready');
+
+                // Create particle network
+                try {
+                    particleNet = new ParticleNetwork(particleCanvas);
+                    console.log('Particle network created');
+                } catch (error) {
+                    console.error('Error creating particle network:', error);
+                }
+
+
+                // Initialize transition manager only after brain is ready
+                try {
+                    transitionManager = new TransitionManager(brainViz, particleNet);
+                    console.log('Transition manager created');
+                } catch (error) {
+                    console.error('Error creating transition manager:', error);
+                }
+
+                 // Hide loading indicator when all components are ready
+                if (brainViz.instancedMesh && particleNet && transitionManager) {
+                    const loadingIndicator = document.getElementById('loading-indicator');
+                    if (loadingIndicator) {
+                        loadingIndicator.style.display = 'none';
+                    }
+                }
+
+                // Debug logging
+                console.log('Initialization complete', {
+                    brainReady: !!brainViz.instancedMesh,
+                    particleNetworkReady: !!particleNet,
+                    transitionManagerReady: !!transitionManager
+                });
+
+            } catch (error) {
+                console.error('Error during initialization:', error);
+            }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            if (particleNet) {
+                particleNet.canvas.width = window.innerWidth;
+                particleNet.canvas.height = window.innerHeight;
+            }
+        });
+    </script>
 </body>
 </html>
