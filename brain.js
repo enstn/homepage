@@ -109,7 +109,7 @@ export class BrainVisualization {
     }
 
     _createCamera() {
-        this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
+        this.camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.1, 100);
         this.camera.position.set(0, 0, 1.2);
     }
 
@@ -139,7 +139,7 @@ export class BrainVisualization {
                     this.brain = gltf.scene.children[0];
                     // const geometry = new THREE.BoxGeometry(0.004, 0.004, 0.004); // box also looks really cool
                     // const geometry = new THREE.TetrahedronGeometry(0.003);
-                    const geometry = new THREE.IcosahedronGeometry(0.0009, 0);
+                    const geometry = new THREE.IcosahedronGeometry(0.0015, 0);
                 
                     
                     const material = new THREE.ShaderMaterial({

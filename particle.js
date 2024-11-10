@@ -3,22 +3,14 @@ export default class Particle {
         this.reset(initialPosition);
         this.transitioning = !!initialPosition;
         this.isProject = false;
-
-        // wireframe from old old version for cool explosion & structure
-        this.wireframe = false;
-        this.rotation = {
-          x: 0,
-          y: 0,
-          z: 0
-        };
-        this.rotationSpeed = {
-          x: 0,
-          y: 0,
-          z: 0
-        };
         this.size = 1;
+
+        // Add properties for better position tracking
+        this.initialPosition = initialPosition;
+        this.screenPosition = null;
+        this.worldPosition = null;
     }
-    reset(initialPosition = null) {
+    resett(initialPosition = null) {
         if (initialPosition) {
             // Start from brain node position
             this.x = initialPosition.x * window.innerWidth / 2;
@@ -39,29 +31,116 @@ export default class Particle {
         this.color 
         = `rgba(255, 255, 255, ${this.brightness})`;
     }
-    update() {
+    // new
+    reset(initialPosition = null) {
+        if (initialPosition) {
+            // Use direct screen coordinates for brain mesh particles
+            this.x = initialPosition.x;
+            this.y = initialPosition.y;
+            this.z = initialPosition.z || 1000;
+            
+            // Store original position for reference
+            this.worldPosition = {
+                x: initialPosition.worldX || this.x,
+                y: initialPosition.worldY || this.y,
+                z: initialPosition.worldZ || this.z
+            };
+            
+            // Calculate target position with less spread for brain particles
+            const spread = 1.5; // Reduced spread factor
+            this.targetX = (Math.random() - 0.5) * window.innerWidth * spread;
+            this.targetY = (Math.random() - 0.5) * window.innerHeight * spread;
+            this.targetZ = Math.random() * 1000 + 500; // Keep closer to camera
+        } else {
+            // Background particle initialization with wider spread
+            const spread = 3;
+            this.x = (Math.random() - 0.5) * window.innerWidth * spread;
+            this.y = (Math.random() - 0.5) * window.innerHeight * spread;
+            this.z = Math.random() * 2000;
+            
+            // Set targets for background particles
+            this.targetX = (Math.random() - 0.5) * window.innerWidth * spread;
+            this.targetY = (Math.random() - 0.5) * window.innerHeight * spread;
+            this.targetZ = Math.random() * 2000;
+        }
+        
+        // Enhanced particle appearance
+        this.radius = initialPosition ? 
+            (Math.random() * 1.5 + 2) : // Larger radius for brain particles
+            (Math.random() * 1 + 1);    // Smaller for background
+        
+        this.brightness = initialPosition ? 1 : 0.8;
+        this.color = `rgba(255, 255, 255, ${this.brightness})`;
+        
+        // Add velocity for more organic movement
+        this.velocity = {
+            x: (Math.random() - 0.5) * 0.1,
+            y: (Math.random() - 0.5) * 0.1,
+            z: (Math.random() - 0.5) * 0.1
+        };
+    }
+    updatee() {
         if (this.transitioning) {
             // Smooth transition to target position
             this.x += (this.targetX - this.x) * 0.02;
             this.y += (this.targetY - this.y) * 0.02;
             this.z += (this.targetZ - this.z) * 0.02;
-
+    
             // Check if transition is complete
             const dx = Math.abs(this.x - this.targetX);
             const dy = Math.abs(this.y - this.targetY);
             const dz = Math.abs(this.z - this.targetZ);
             if (dx < 1 && dy < 1 && dz < 1) {
                 this.transitioning = false;
-            }
-
-            // Update rotation if particle is in wireframe mode
-            if (this.wireframe) {
-              this.rotation.x += this.rotationSpeed.x;
-              this.rotation.y += this.rotationSpeed.y;
-              this.rotation.z += this.rotationSpeed.z;
+                // Set final position exactly to avoid floating point errors
+                this.x = this.targetX;
+                this.y = this.targetY;
+                this.z = this.targetZ;
             }
         }
     }
+    // new
+    update() {
+        if (this.transitioning) {
+            // Enhanced smooth transition with acceleration
+            const transitionSpeed = 0.03;
+            const distanceWeight = 0.1;
+            
+            // Calculate distance-based transition speed
+            const dx = this.targetX - this.x;
+            const dy = this.targetY - this.y;
+            const dz = this.targetZ - this.z;
+            
+            const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+            const speedFactor = 1 + (distance * distanceWeight);
+            
+            // Apply movement with variable speed
+            this.x += dx * transitionSpeed * speedFactor;
+            this.y += dy * transitionSpeed * speedFactor;
+            this.z += dz * transitionSpeed * speedFactor;
+            
+            // Check if transition is complete
+            if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5 && Math.abs(dz) < 0.5) {
+                this.transitioning = false;
+                // Snap to exact position
+                this.x = this.targetX;
+                this.y = this.targetY;
+                this.z = this.targetZ;
+            }
+        } else {
+            // Add subtle movement for non-transitioning particles
+            this.x += this.velocity.x;
+            this.y += this.velocity.y;
+            this.z += this.velocity.z;
+            
+            // Boundary check and velocity adjustment
+            const bounds = window.innerWidth * 1.5;
+            if (Math.abs(this.x) > bounds) this.velocity.x *= -1;
+            if (Math.abs(this.y) > bounds) this.velocity.y *= -1;
+            if (this.z < 0 || this.z > 2000) this.velocity.z *= -1;
+        }
+    }
+    // better brain mesh performance
     draw(ctx, x2d, y2d, scale, alpha) {
         const r = this.radius * scale;
         const gradient = ctx.createRadialGradient(x2d, y2d, 0, x2d, y2d, r * 2);
@@ -76,73 +155,43 @@ export default class Particle {
             gradient.addColorStop(1, `rgba(255, 255, 255, 0)`);
         }
 
-        // Draw wireframe cube if particle is in wireframe mode
-        if (this.wireframe) {
-          this.drawWireframeCube(ctx, x2d, y2d, this.size * scale, this.rotation, alpha);
-        } else {
-          // Draw regular particle
-          ctx.beginPath();
-          ctx.fillStyle = this.color;
-          ctx.fillStyle = this.isProject ? `rgba(100, 200, 255, ${alpha})` : `rgba(255, 255, 255, ${alpha})`;
-          ctx.arc(x2d, y2d, 3 * scale, 0, 2 * Math.PI);
-          ctx.fill();
-        }
-        
         ctx.beginPath();
+        ctx.fillStyle = this.color;
         ctx.fillStyle = this.isProject ? `rgba(100, 200, 255, ${alpha})` : `rgba(255, 255, 255, ${alpha})`;
         ctx.arc(x2d, y2d, r, 0, Math.PI * 2);
         ctx.fill();
     }
-    
-    drawWireframeCube (ctx, x, y, size, rotation, alpha) {
-        // Cube vertices (centered at origin)
-        const vertices = [
-            [-1, -1, -1], [1, -1, -1], [1, 1, -1], [-1, 1, -1],
-            [-1, -1, 1], [1, -1, 1], [1, 1, 1], [-1, 1, 1]
-        ].map(v => [v[0] * size/2, v[1] * size/2, v[2] * size/2]);
+    // new
+    draww(ctx, x2d, y2d, scale, alpha) {
+        // Skip drawing if outside visible area with margin
+        const margin = 100;
+        if (x2d < -margin || x2d > window.innerWidth + margin ||
+            y2d < -margin || y2d > window.innerHeight + margin) {
+            return;
+        }
 
-        // Rotation matrices
-        const rotateX = (point) => {
-            const [x, y, z] = point;
-            const cos = Math.cos(rotation.x), sin = Math.sin(rotation.x);
-            return [x, y * cos - z * sin, y * sin + z * cos];
-        };
+        const r = this.radius * scale;
         
-        const rotateY = (point) => {
-            const [x, y, z] = point;
-            const cos = Math.cos(rotation.y), sin = Math.sin(rotation.y);
-            return [x * cos + z * sin, y, -x * sin + z * cos];
-        };
+        // Enhanced gradient for better visibility
+        const gradient = ctx.createRadialGradient(x2d, y2d, 0, x2d, y2d, r * 2);
+        const baseColor = this.isProject ? '100, 200, 255' : '255, 255, 255';
+        const adjustedAlpha = alpha * this.brightness;
         
-        const rotateZ = (point) => {
-            const [x, y, z] = point;
-            const cos = Math.cos(rotation.z), sin = Math.sin(rotation.z);
-            return [x * cos - y * sin, x * sin + y * cos, z];
-        };
-
-        // Apply rotations and project to 2D
-        const projected = vertices.map(v => {
-            let p = rotateX(v);
-            p = rotateY(p);
-            p = rotateZ(p);
-            return [x + p[0], y + p[1]];
-        });
-
-        // Draw edges
-        const edges = [
-            [0,1], [1,2], [2,3], [3,0],
-            [4,5], [5,6], [6,7], [7,4],
-            [0,4], [1,5], [2,6], [3,7]
-        ];
-
-        ctx.strokeStyle = `${this.color}${alpha})`;
-        ctx.lineWidth = 1;
+        gradient.addColorStop(0, `rgba(${baseColor}, ${adjustedAlpha})`);
+        gradient.addColorStop(0.4, `rgba(${baseColor}, ${adjustedAlpha * 0.6})`);
+        gradient.addColorStop(1, `rgba(${baseColor}, 0)`);
+        
+        // Draw particle core
         ctx.beginPath();
-        edges.forEach(([a, b]) => {
-            ctx.moveTo(projected[a][0], projected[a][1]);
-            ctx.lineTo(projected[b][0], projected[b][1]);
-        });
-        ctx.stroke();
+        ctx.fillStyle = gradient;
+        ctx.arc(x2d, y2d, r * 1.5, 0, Math.PI * 2);
+        ctx.fill();
+        
+        // Draw inner glow
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(${baseColor}, ${adjustedAlpha * 1.2})`;
+        ctx.arc(x2d, y2d, r * 0.5, 0, Math.PI * 2);
+        ctx.fill();
     }
 }
 
