@@ -20,7 +20,9 @@
 
     <!-- Header -->
     <header class="header">
-        <h1>Interactive Brain Explorer</h1>
+        <span class="title-wrapper">
+            <h1 id="site-title">Interactive Brain Explorer</h1>
+        </span>
         <p>Click and drag to rotate, hover over regions to explore</p>
     </header>
 
@@ -50,14 +52,9 @@
 
     <!-- Info Panel -->
     <div id="info-panel">
-        <button class="close-panel">&times;</button>
+        <button class="close-panel" id="close-info-panel">&times;</button>
         <h2>Region Details</h2>
         <div id="region-details"></div>
-    </div>
-
-    <!-- Controls -->
-    <div class="controls">
-        <button class="control-button" id="reset-view">Reset View</button>
     </div>
 
     <!-- Three.js -->
@@ -98,10 +95,13 @@
                 console.error('Error initializing brain:', error);
             }
         });
-
+    
         function setupUIInteractions(brainViz) {
             // Legend item interactions
             const legendItems = document.querySelectorAll('.legend-item');
+            const infoPanel = document.getElementById('info-panel');
+            const closeButton = document.getElementById('close-info-panel');  // Get the button element
+    
             legendItems.forEach(item => {
                 item.addEventListener('click', () => {
                     const region = item.dataset.region;
@@ -110,34 +110,43 @@
                     showRegionDetails(region);
                 });
             });
-
-            // Reset view button
-            const resetButton = document.getElementById('reset-view');
-            if (resetButton) {
-                resetButton.addEventListener('click', () => {
-                    if (brainViz) brainViz.resetView();
-                });
-            }
-
-            // Close panel button
-            const closeButton = document.querySelector('.close-panel');
-            if (closeButton) {
+    
+            // Enhanced close button functionality
+            if (closeButton && infoPanel) {
                 closeButton.addEventListener('click', () => {
-                    const infoPanel = document.getElementById('info-panel');
+                    console.log('Close button clicked'); // For debugging
                     infoPanel.classList.remove('active');
                 });
             }
         }
-
+    
         function showRegionDetails(region) {
             const infoPanel = document.getElementById('info-panel');
             const detailsContainer = document.getElementById('region-details');
             
-            // Add your region-specific content here
             detailsContainer.innerHTML = `<h3>${region.charAt(0).toUpperCase() + region.slice(1)} Lobe</h3>
                                         <p>Detailed information about the ${region} lobe...</p>`;
             
             infoPanel.classList.add('active');
+        }
+    
+        // Make title clickable for refresh
+        const siteHeader = document.querySelector('.header');
+        const titleWrapper = document.querySelector('.title-wrapper');
+    
+        if (siteHeader && titleWrapper) {
+            siteHeader.addEventListener('click', (e) => {
+                const wrapperRect = titleWrapper.getBoundingClientRect();
+                const clickX = e.clientX;
+                const clickY = e.clientY;
+    
+                if (clickX >= wrapperRect.left && 
+                    clickX <= wrapperRect.right && 
+                    clickY >= wrapperRect.top && 
+                    clickY <= wrapperRect.bottom) {
+                    window.location.reload();
+                }
+            });
         }
     </script>
 </body>

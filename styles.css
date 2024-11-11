@@ -23,7 +23,7 @@ body {
 
 .info {
     position: fixed;
-    top: 40px;
+    top: 50%;
     left: 50%;
     transform: translateX(-50%);
     font-family: 'Times New Roman', serif;
@@ -32,7 +32,7 @@ body {
     color: rgb(255, 0, 0);
     opacity: 1;
     z-index: 4;
-    animation: pulse 2s infinite;
+    animation: pulse 1s infinite; 
 }
 
 /* Header */
@@ -44,13 +44,22 @@ body {
     padding: 2rem;
     z-index: 10;
     background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.header:hover {
+    opacity: 0.8;
 }
 
 .header h1 {
-    font-size: 1.5rem;
+    font-size: 2.5rem;
+    font-family:cursive;
     font-weight: 500;
     margin: 0;
     opacity: 0.9;
+    display: inline-block; /* This is the key change */
+    cursor: pointer;
 }
 
 .header p {
@@ -91,7 +100,7 @@ body {
 }
 
 .legend-item:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(155, 9, 9, 0.67);
     transform: translateX(5px);
 }
 
@@ -111,30 +120,26 @@ body {
 }
 
 /* Info Panel */
+/* Modified CSS for info-panel */
 #info-panel {
     position: fixed;
-    right: -400px;
+    right: 0;
     top: 0;
-    width: 400px;
+    width: 50%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(8px);
     padding: 2rem;
     box-sizing: border-box;
-    transition: right 0.3s ease;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
     overflow-y: auto;
     border-left: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 100;
 }
 
 #info-panel.active {
-    right: 0;
-}
-
-#info-panel h2 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transform: translateX(0);
 }
 
 .close-panel {
@@ -148,6 +153,16 @@ body {
     font-size: 1.5rem;
     opacity: 0.7;
     transition: opacity 0.3s ease;
+    padding: 0.5rem;
+    z-index: 101;
+}
+
+
+#info-panel h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .close-panel:hover {
@@ -216,9 +231,9 @@ body {
     100% { transform: rotate(360deg); }
 }
 @keyframes pulse {
-    0% { opacity: 0.7; }
+    0% { opacity: 1.0; }
     50% { opacity: 0.3; }
-    100% { opacity: 0.7; }
+    100% { opacity: 1.0; }
 }
 
 /* Responsive Design */
@@ -232,6 +247,7 @@ body {
     #info-panel {
         width: 100%;
         right: -100%;
+        transform: translateX(100%);
     }
 
     .header {
