@@ -1,97 +1,244 @@
-/* Base styles */
-body {
+* {
     margin: 0;
-    overflow-x: hidden;
-    background: #000000;
-    height: 500vh;
-    font-family: Arial, sans-serif;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-/* Container styles */
+body {
+    margin: 0;
+    background: #000000;
+    color: white;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    overflow: hidden;
+    line-height: 1.6;
+}
+
 #brain-container {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100vh;
+    height: 100%;
+}
+
+.info {
+    position: fixed;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Times New Roman', serif;
+    font-size: 36px;
+    font-weight: bold;
+    color: rgb(255, 0, 0);
+    opacity: 1;
+    z-index: 4;
+    animation: pulse 2s infinite;
+}
+
+/* Header */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 2rem;
+    z-index: 10;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+}
+
+.header h1 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 0;
+    opacity: 0.9;
+}
+
+.header p {
+    font-size: 1rem;
+    opacity: 0.7;
+    margin-top: 0.5rem;
+}
+
+/* Navigation/Legend Panel */
+#brain-legend {
+    position: fixed;
+    left: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.85);
+    padding: 1.5rem;
+    border-radius: 12px;
+    width: 300px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.legend-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.legend-item {
+    padding: 1rem;
+    margin: 0.5rem 0;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.legend-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(5px);
+}
+
+.legend-item.active {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.region-title {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.region-description {
+    font-size: 0.875rem;
+    opacity: 0.7;
+}
+
+/* Info Panel */
+#info-panel {
+    position: fixed;
+    right: -400px;
+    top: 0;
+    width: 400px;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 2rem;
+    box-sizing: border-box;
+    transition: right 0.3s ease;
+    overflow-y: auto;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#info-panel.active {
+    right: 0;
+}
+
+#info-panel h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.close-panel {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 1.5rem;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.close-panel:hover {
+    opacity: 1;
+}
+
+/* Controls */
+.controls {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
-    justify-content: center;
-    align-items: center;
-    background: transparent;
-    z-index: 3;
-    transition: opacity 0.5s ease;
+    gap: 1rem;
+    z-index: 10;
 }
 
-#brain-container.hidden {
-    opacity: 0;
-    pointer-events: none;
+.control-button {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
 }
 
-#canvas-container {
+.control-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Loading Screen */
+#loading-screen {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     background: #000000;
-    z-index: 2;
-}
-
-/* Network canvas specific */
-#networkCanvas {
-    display: block;
-    width: 100%;
-    height: 100vh;
-    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
     transition: opacity 0.5s ease;
-    background: #000000;
 }
 
-#networkCanvas.visible {
-    opacity: 1;
+.loading-content {
+    text-align: center;
 }
 
-/* Loading indicator */
-#loading-indicator {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-family: Arial, sans-serif;
-    z-index: 10;
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    border-top: 3px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
 }
 
-/* Scroll indicator */
-.scroll-indicator {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    color: white;
-    opacity: 0.7;
-    animation: pulse 2s infinite;
-    z-index: 4;
+/* animations */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
-
-/* Animations */
 @keyframes pulse {
     0% { opacity: 0.7; }
     50% { opacity: 0.3; }
     100% { opacity: 0.7; }
 }
 
-/* Remove any opacity forcing from Three.js canvas */
-#brain-container canvas {
-    opacity: 1 !important;
-}
+/* Responsive Design */
+@media (max-width: 768px) {
+    #brain-legend {
+        left: 1rem;
+        width: calc(100% - 2rem);
+        max-width: 300px;
+    }
 
-/* Utility classes */
-.visible {
-    opacity: 1 !important;
-}
+    #info-panel {
+        width: 100%;
+        right: -100%;
+    }
 
-.hidden {
-    opacity: 0 !important;
-    pointer-events: none;
+    .header {
+        padding: 1rem;
+    }
+
+    .header h1 {
+        font-size: 1.2rem;
+    }
 }

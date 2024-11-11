@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+// import { gsap } from 'gsap'
 
 const vertexShader = `
     uniform vec3 uPointer;
@@ -50,14 +51,21 @@ const fragmentShader = `
 
 export class BrainVisualization {
     constructor() {
+        // Initialize all properties in constructor
         this.container = document.getElementById('brain-container');
         this.hover = false;
         this.point = new THREE.Vector3();
         this.mouse = new THREE.Vector2();
         
+        // Initialize colors
         this.baseColor = new THREE.Color(0xFFFFFF);
-        this.hoverColors = [new THREE.Color(0xFFD700)];
+        this.hoverColors = [
+            new THREE.Color(0xFFD700),  // Gold
+            // new THREE.Color(0xFF4500),  // Red Orange
+            // new THREE.Color(0xFF8C00)   // Dark Orange
+        ];
         
+        // Initialize uniforms
         this.uniforms = {
             uHover: { value: 0 },
             uPointer: { value: new THREE.Vector3() },
@@ -81,10 +89,10 @@ export class BrainVisualization {
         this._loadModel()
             .then(() => {
                 this._addListeners();
-                const loadingElement = document.getElementById('loading-screen');
-                if (loadingElement) {
-                    loadingElement.style.display = 'none';
-                }
+                const loadingElement = document.getElementById('loading');  // Add this line
+                if (loadingElement) {                                      // Add this line
+                    loadingElement.style.display = 'none';                 // Add this line
+                }                                                          // Add this line
                 this.animate();
             })
             .catch(error => {
@@ -95,6 +103,8 @@ export class BrainVisualization {
     _createScene() {
         this.scene = new THREE.Scene();
         this.scene.background = new THREE.Color(0x000000);
+
+        // Make the container interactive
         this.container.style.cursor = 'pointer';
     }
 
@@ -127,13 +137,23 @@ export class BrainVisualization {
                 './models/brain.glb',
                 (gltf) => {
                     this.brain = gltf.scene.children[0];
+                    // const geometry = new THREE.BoxGeometry(0.004, 0.004, 0.004); // box also looks really cool
+                    // const geometry = new THREE.TetrahedronGeometry(0.003);
                     const geometry = new THREE.IcosahedronGeometry(0.0015, 0);
+                
                     
                     const material = new THREE.ShaderMaterial({
                         vertexShader,
                         fragmentShader,
                         wireframe: true,
-                        uniforms: this.uniforms
+                        uniforms: {
+                            uPointer: { value: new THREE.Vector3() },
+                            uColor: { value: this.baseColor },
+                            uHoverColor: { value: new THREE.Color() },
+                            uRotation: { value: 0 },
+                            uSize: { value: 0 },
+                            uHover: { value: 0 }
+                        }
                     });
     
                     const positions = this.brain.geometry.attributes.position.array;
@@ -160,6 +180,7 @@ export class BrainVisualization {
     
                     this.instancedMesh.instanceMatrix.needsUpdate = true;
     
+                    // Set initial uniforms for all instances
                     for (let i = 0; i < instanceCount; i++) {
                         const colorIndex = Math.floor(Math.random() * this.hoverColors.length);
                         material.uniforms.uHoverColor.value.copy(this.hoverColors[colorIndex]);
@@ -168,6 +189,13 @@ export class BrainVisualization {
                     }
     
                     this.scene.add(this.instancedMesh);
+                    
+                    // Remove loading indicator
+                    const loadingIndicator = document.getElementById('loading-indicator');
+                    if (loadingIndicator) {
+                        loadingIndicator.style.display = 'none';
+                    }
+                    
                     resolve();
                 },
                 undefined,
@@ -182,11 +210,11 @@ export class BrainVisualization {
     }
 
     _onMousemove(e) {
-        const x = (e.clientX / window.innerWidth) * 2 - 1;
-        const y = -(e.clientY / window.innerHeight) * 2 + 1;
+        const x = e.clientX / window.innerWidth * 2 - 1;
+        const y = -(e.clientY / window.innerHeight * 2 - 1);
+
         this.mouse.set(x, y);
 
-        // Camera movement
         gsap.to(this.camera.position, {
             x: x * 0.15,
             y: y * 0.1,
@@ -245,3 +273,8 @@ export class BrainVisualization {
         this.renderer.render(this.scene, this.camera);
     }
 }
+
+// Initialize when document is loaded
+// document.addEventListener('DOMContentLoaded', () => {
+//     new BrainVisualization();
+// });
