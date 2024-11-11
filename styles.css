@@ -23,16 +23,16 @@ body {
 
 .info {
     position: fixed;
-    top: 50%;
+    bottom: 10%;
     left: 50%;
     transform: translateX(-50%);
     font-family: 'Times New Roman', serif;
-    font-size: 36px;
-    font-weight: bold;
+    font-size: 20px;
+    font-weight:lighter;
     color: rgb(255, 0, 0);
     opacity: 1;
     z-index: 4;
-    animation: pulse 1s infinite; 
+    animation: pulse 2s infinite; 
 }
 
 /* Header */
@@ -54,7 +54,6 @@ body {
 
 .header h1 {
     font-size: 2.5rem;
-    font-family:cursive;
     font-weight: 500;
     margin: 0;
     opacity: 0.9;
@@ -71,13 +70,13 @@ body {
 /* Navigation/Legend Panel */
 #brain-legend {
     position: fixed;
-    left: 2rem;
+    left: 1rem;
     top: 50%;
     transform: translateY(-50%);
     background: rgba(0, 0, 0, 0.85);
     padding: 1.5rem;
     border-radius: 12px;
-    width: 300px;
+    width: 15%;
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -105,7 +104,7 @@ body {
 }
 
 .legend-item.active {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.473);
 }
 
 .region-title {
@@ -125,16 +124,16 @@ body {
     position: fixed;
     right: 0;
     top: 0;
-    width: 50%;
+    width: 80%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.75);
-    backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
     padding: 2rem;
     box-sizing: border-box;
     transform: translateX(100%);
     transition: transform 0.3s ease-in-out;
     overflow-y: auto;
-    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 1px solid rgba(203, 203, 24, 0.1);
     z-index: 100;
 }
 

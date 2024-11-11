@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Brain Visualization</title>
+    <title>lejiang</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Warning -->
-    <div class="info">Halt stop! This website is still under construction.</div>
+    <div class="info">website is still under construction.</div>
     <!-- Loading Screen -->
     <div id="loading-screen">
         <div class="loading-content">
@@ -21,9 +21,9 @@
     <!-- Header -->
     <header class="header">
         <span class="title-wrapper">
-            <h1 id="site-title">Interactive Brain Explorer</h1>
+            <h1 id="site-title">idk title yet.</h1>
         </span>
-        <p>Click and drag to rotate, hover over regions to explore</p>
+        <p>still testing and playing around.</p>
     </header>
 
     <!-- Brain Container -->
@@ -31,22 +31,22 @@
 
     <!-- Legend Panel -->
     <div id="brain-legend">
-        <h2 class="legend-title">Brain Regions</h2>
-        <div class="legend-item" data-region="frontal">
-            <h3 class="region-title">Frontal Lobe</h3>
-            <p class="region-description">Controls executive functions, planning, and personality</p>
+        <h2 class="legend-title">brain regions</h2>
+        <div class="legend-item" data-region="1st">
+            <h3 class="region-title">1</h3>
+            <p class="region-description">idk</p>
         </div>
-        <div class="legend-item" data-region="temporal">
-            <h3 class="region-title">Temporal Lobe</h3>
-            <p class="region-description">Processes auditory information and memory</p>
+        <div class="legend-item" data-region="2nd">
+            <h3 class="region-title">2</h3>
+            <p class="region-description">idk</p>
         </div>
-        <div class="legend-item" data-region="parietal">
-            <h3 class="region-title">Parietal Lobe</h3>
-            <p class="region-description">Integrates sensory information</p>
+        <div class="legend-item" data-region="3rd">
+            <h3 class="region-title">3</h3>
+            <p class="region-description">idk</p>
         </div>
-        <div class="legend-item" data-region="occipital">
-            <h3 class="region-title">Occipital Lobe</h3>
-            <p class="region-description">Processes visual information</p>
+        <div class="legend-item" data-region="4th">
+            <h3 class="region-title">4</h3>
+            <p class="region-description">idk</p>
         </div>
     </div>
 
@@ -124,8 +124,8 @@
             const infoPanel = document.getElementById('info-panel');
             const detailsContainer = document.getElementById('region-details');
             
-            detailsContainer.innerHTML = `<h3>${region.charAt(0).toUpperCase() + region.slice(1)} Lobe</h3>
-                                        <p>Detailed information about the ${region} lobe...</p>`;
+            detailsContainer.innerHTML = `<h3>${region.charAt(0).toUpperCase() + region.slice(1)} whatever region</h3>
+                                        <p>Detailed information about the ${region} </p>`;
             
             infoPanel.classList.add('active');
         }
