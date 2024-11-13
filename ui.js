@@ -1,4 +1,6 @@
 // ui.js
+import { regionContent } from './content.js';
+
 export function setupMagneticLegend() {
     const items = document.querySelectorAll('.legend-item');
     const magnetThreshold = 100; // Detection radius in pixels
@@ -84,26 +86,6 @@ export function setupUIInteractions() {
     setupMagneticLegend();
 }
 
-function showRegionDetails(region) {
-    const infoPanel = document.getElementById('info-panel');
-    const detailsContainer = document.getElementById('region-details');
-
-    detailsContainer.classList.add('changing');
-
-    if (!infoPanel.classList.contains('active')) {
-        infoPanel.classList.add('active');
-    }
-
-    setTimeout(() => {
-        detailsContainer.innerHTML = `
-            <h3>${region.charAt(0).toUpperCase() + region.slice(1)} whatever region</h3>
-            <p>Detailed information about the ${region}</p>
-        `;
-
-        detailsContainer.classList.remove('changing');
-    }, 300);
-}
-
 function setupTitleRefresh() {
     const siteTitle = document.getElementById('site-title');
     
@@ -138,3 +120,108 @@ export const devTools = {
         return 'Site data cleared. Refresh the page to see changes.';
     }
 };
+
+// region content stuff
+function showRegionDetails(region) {
+    const infoPanel = document.getElementById('info-panel');
+    const detailsContainer = document.getElementById('region-details');
+    const content = regionContent[region];
+
+    if (!content) {
+        console.error(`No content found for region: ${region}`);
+        return;
+    }
+
+    detailsContainer.classList.add('changing');
+
+    if (!infoPanel.classList.contains('active')) {
+        infoPanel.classList.add('active');
+    }
+
+    setTimeout(() => {
+        let htmlContent = `
+            <div class="region-header">
+                <h2>${content.title}</h2>
+                <div class="content-divider" style="margin: 0.5rem auto"></div>
+                ${content.subtitle ? `<h3>${content.subtitle}</h3>` : ''}
+            </div>
+            <div class="region-content">
+        `;
+
+        // Build content based on content types
+        content.content.forEach(item => {
+            switch (item.type) {
+                case 'image':
+                    htmlContent += `
+                        <div class="content-image">
+                            <img src="${item.src}" alt="${item.alt}">
+                        </div>
+                    `;
+                    break;
+                case 'text':
+                    htmlContent += `
+                        <p class="content-text">${item.content}</p>
+                    `;
+                    break;
+                case 'list':
+                    htmlContent += `
+                        <div class="content-list">
+                            ${item.title ? `<h4>${item.title}</h4>` : ''}
+                            <ul>
+                                ${item.items.map(listItem => `<li>${listItem}</li>`).join('')}
+                            </ul>
+                        </div>
+                    `;
+                    break;
+                case 'highlight':
+                    htmlContent += `
+                        <div class="content-highlight">
+                            ${item.content}
+                        </div>
+                    `;
+                    break;
+                case 'link':
+                    htmlContent += `
+                        <div class="content-link">
+                            <a href="${item.url}" target="_blank" rel="noopener noreferrer">
+                                ${item.icon ? `<span class="link-icon">${item.icon}</span>` : ''}
+                                <div class="link-content">
+                                    <h4 class="link-title">${item.title}</h4>
+                                    <p class="link-description">${item.description}</p>
+                                </div>
+                            </a>
+                        </div>
+                    `;
+                    break;
+                case 'divider':
+                    const dividerStyle = item.style || {};
+                    htmlContent += `
+                        <div class="content-divider" 
+                            style="
+                                margin: ${dividerStyle.margin || '1.5rem auto'};
+                                height: ${dividerStyle.height || '1px'};
+                                max-width: ${dividerStyle.width || '95%'};
+                                background: ${dividerStyle.color || 'currentColor'};
+                            "
+                        ></div>
+                    `;
+                    break;
+            }
+        });
+
+        htmlContent += `</div>`;
+        detailsContainer.innerHTML = htmlContent;
+
+        // Apply accent color if specified
+        if (content.accentColor) {
+            detailsContainer.querySelectorAll('.region-header h2, .content-list h4').forEach(element => {
+                element.style.color = content.accentColor;
+            });
+            detailsContainer.querySelectorAll('.content-highlight').forEach(element => {
+                element.style.borderLeft = `3px solid ${content.accentColor}`;
+            });
+        }
+
+        detailsContainer.classList.remove('changing');
+    }, 300);
+}

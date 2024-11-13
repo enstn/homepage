@@ -2,8 +2,7 @@
 Code for my [ETH website](https://n.ethz.ch/~lejiang/)
 
 ## ToDo
-- [ ] test page init: github project neuropong embedding
-- [ ] test cortex: glb fragment model load & lighting | some kind of transition with visibility  
+- [ ] test cortex highlight: glb fragment model load & lighting | some kind of transition with visibility  
 
 ## BugsToFix
 - [ ] closing pages: esc button
