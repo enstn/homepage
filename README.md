@@ -8,7 +8,6 @@ Code for my [ETH website](https://n.ethz.ch/~lejiang/)
 ## BugsToFix
 - [ ] closing pages: reset colour
 - [ ] closing pages: esc
-- [ ] page reload: title has to be clicked twice 
 
 > [!WARNING]
 > Website still under construction. Might crash your browser. It already crashed mine several times during my learning process due to horrendous rendering code. I also didnt look at mobile implementation yet.

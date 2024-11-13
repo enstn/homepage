@@ -56,7 +56,10 @@ export class BrainVisualization {
         this.mouse = new THREE.Vector2();
         
         this.baseColor = new THREE.Color(0xFFFFFF);
-        this.hoverColors = [new THREE.Color(0xFFD700)];
+        this.hoverColors = [new THREE.Color(0xFFCB9A)]; 
+
+        this.isInfoPanelActive = false;
+        this.setupInfoPanelListener();
         
         this.uniforms = {
             uHover: { value: 0 },
@@ -181,7 +184,38 @@ export class BrainVisualization {
         window.addEventListener('mousemove', (e) => this._onMousemove(e));
     }
 
+    setupInfoPanelListener() {
+        const infoPanel = document.getElementById('info-panel');
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.attributeName === 'class') {
+                    this.isInfoPanelActive = infoPanel.classList.contains('active');
+                }
+            });
+        });
+        
+        observer.observe(infoPanel, { attributes: true });
+        
+        // Add mouse position tracking for info panel
+        infoPanel.addEventListener('mouseover', () => {
+            this.isMouseOverInfoPanel = true;
+        });
+        
+        infoPanel.addEventListener('mouseout', () => {
+            this.isMouseOverInfoPanel = false;
+        });
+    }
+
     _onMousemove(e) {
+        // Only process hover effects if info panel is not active or mouse is not over it
+        if (this.isInfoPanelActive && this.isMouseOverInfoPanel) {
+            if (this.hover) {
+                this.hover = false;
+                this._animateHoverUniform(0);
+            }
+            return;
+        }
+        
         const x = (e.clientX / window.innerWidth) * 2 - 1;
         const y = -(e.clientY / window.innerHeight) * 2 + 1;
         this.mouse.set(x, y);

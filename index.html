@@ -9,7 +9,8 @@
 </head>
 <body>
     <!-- Warning -->
-    <div class="info">website is still under construction.</div>
+    <div class="info">Hover over the boxes or the brain to explore.</div>
+    
     <!-- Loading Screen -->
     <div id="loading-screen">
         <div class="loading-content">
@@ -23,7 +24,9 @@
         <span class="title-wrapper">
             <h1 id="site-title">idk title yet.</h1>
         </span>
-        <p>still testing and playing around.</p>
+        <p>still testing and playing around;</p>
+        <p>don't blame me if I crash ur browser;</p>
+        <p>seriously, i warned you;</p>
     </header>
 
     <!-- Brain Container -->
@@ -31,22 +34,30 @@
 
     <!-- Legend Panel -->
     <div id="brain-legend">
-        <h2 class="legend-title">brain regions</h2>
+        <h2 class="legend-title">Brain Regions</h2>
         <div class="legend-item" data-region="1st">
-            <h3 class="region-title">1</h3>
-            <p class="region-description">idk</p>
+            <div class="legend-content">
+                <h3 class="region-title">1</h3>
+                <p class="region-description">idk</p>
+            </div>
         </div>
         <div class="legend-item" data-region="2nd">
-            <h3 class="region-title">2</h3>
-            <p class="region-description">idk</p>
+            <div class="legend-content">
+                <h3 class="region-title">2</h3>
+                <p class="region-description">idk</p>
+            </div>
         </div>
         <div class="legend-item" data-region="3rd">
-            <h3 class="region-title">3</h3>
-            <p class="region-description">idk</p>
+            <div class="legend-content">
+                <h3 class="region-title">3</h3>
+                <p class="region-description">idk</p>
+            </div>
         </div>
         <div class="legend-item" data-region="4th">
-            <h3 class="region-title">4</h3>
-            <p class="region-description">idk</p>
+            <div class="legend-content">
+                <h3 class="region-title">4</h3>
+                <p class="region-description">idk</p>
+            </div>
         </div>
     </div>
 
@@ -71,19 +82,21 @@
     <!-- GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
+    <!-- Main Script -->
     <script type="module">
         import { BrainVisualization } from './brain.js';
+        import { setupUIInteractions, devTools } from './ui.js';
         
         let brainViz;
+        
+        // Make devTools available globally
+        window.devTools = devTools;
         
         document.addEventListener('DOMContentLoaded', async () => {
             try {
                 brainViz = new BrainVisualization();
+                setupUIInteractions();
                 
-                // Setup UI interactions
-                setupUIInteractions(brainViz);
-                
-                // Hide loading screen when brain is ready
                 const loadingScreen = document.getElementById('loading-screen');
                 setTimeout(() => {
                     loadingScreen.style.opacity = '0';
@@ -95,59 +108,6 @@
                 console.error('Error initializing brain:', error);
             }
         });
-    
-        function setupUIInteractions(brainViz) {
-            // Legend item interactions
-            const legendItems = document.querySelectorAll('.legend-item');
-            const infoPanel = document.getElementById('info-panel');
-            const closeButton = document.getElementById('close-info-panel');  // Get the button element
-    
-            legendItems.forEach(item => {
-                item.addEventListener('click', () => {
-                    const region = item.dataset.region;
-                    legendItems.forEach(i => i.classList.remove('active'));
-                    item.classList.add('active');
-                    showRegionDetails(region);
-                });
-            });
-    
-            // Enhanced close button functionality
-            if (closeButton && infoPanel) {
-                closeButton.addEventListener('click', () => {
-                    console.log('Close button clicked'); // For debugging
-                    infoPanel.classList.remove('active');
-                });
-            }
-        }
-    
-        function showRegionDetails(region) {
-            const infoPanel = document.getElementById('info-panel');
-            const detailsContainer = document.getElementById('region-details');
-            
-            detailsContainer.innerHTML = `<h3>${region.charAt(0).toUpperCase() + region.slice(1)} whatever region</h3>
-                                        <p>Detailed information about the ${region} </p>`;
-            
-            infoPanel.classList.add('active');
-        }
-    
-        // Make title clickable for refresh
-        const siteHeader = document.querySelector('.header');
-        const titleWrapper = document.querySelector('.title-wrapper');
-    
-        if (siteHeader && titleWrapper) {
-            siteHeader.addEventListener('click', (e) => {
-                const wrapperRect = titleWrapper.getBoundingClientRect();
-                const clickX = e.clientX;
-                const clickY = e.clientY;
-    
-                if (clickX >= wrapperRect.left && 
-                    clickX <= wrapperRect.right && 
-                    clickY >= wrapperRect.top && 
-                    clickY <= wrapperRect.bottom) {
-                    window.location.reload();
-                }
-            });
-        }
     </script>
 </body>
 </html>

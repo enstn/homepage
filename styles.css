@@ -11,6 +11,7 @@ body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     overflow: hidden;
     line-height: 1.6;
+    font-size: 16px; /* Base font size for rem calculations */
 }
 
 #brain-container {
@@ -26,13 +27,13 @@ body {
     bottom: 10%;
     left: 50%;
     transform: translateX(-50%);
-    font-family: 'Times New Roman', serif;
-    font-size: 20px;
-    font-weight:lighter;
-    color: rgb(255, 0, 0);
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.6);
     opacity: 1;
     z-index: 4;
-    animation: pulse 2s infinite; 
+    animation: pulse 2s infinite;
 }
 
 /* Header */
@@ -44,7 +45,7 @@ body {
     padding: 2rem;
     z-index: 10;
     background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
-    cursor: pointer;
+    cursor: default;
     transition: opacity 0.3s ease;
 }
 
@@ -53,145 +54,198 @@ body {
 }
 
 .header h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 500;
     margin: 0;
-    opacity: 0.9;
-    display: inline-block; /* This is the key change */
+    color:white;
+    display: inline-block;
     cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.header h1:hover {
+    color: rgba(255, 0, 0, 0.8);
+    transform: translateX(5px);
 }
 
 .header p {
     font-size: 1rem;
     opacity: 0.7;
     margin-top: 0.5rem;
+    color: rgba(255, 0, 0, 1)
 }
 
-/* Navigation/Legend Panel */
 #brain-legend {
     position: fixed;
-    left: 1rem;
+    left: 2%;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.85);
-    padding: 1.5rem;
-    border-radius: 12px;
-    width: 15%;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 4vh;
+    padding: 1rem;
+    width: 2rem; /* Added fixed width for centering */
+    align-items: center; /* Center items horizontally */
+}
+
+#brain-legend::before {
+    content: '';
+    position: absolute;
+    bottom: 2%;
+    left: 50%; /* Center the line */
+    transform: translateX(-50%); /* Ensure perfect centering */
+    height: 160%;
+    width: 2px;
+    background: linear-gradient(
+        to bottom,
+        transparent,
+        rgba(255, 255, 255, 0.1) 20%,
+        rgba(255, 255, 255, 0.1) 80%,
+        transparent
+    );
 }
 
 .legend-title {
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin-bottom: 1.5rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: none;
 }
 
 .legend-item {
-    padding: 1rem;
-    margin: 0.5rem 0;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    background: rgba(255, 255, 255, 0.05);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    height: 1.5rem;
+    width: 1.5rem; /* Added fixed width */
+    will-change: transform;
 }
 
-.legend-item:hover {
-    background: rgba(155, 9, 9, 0.67);
-    transform: translateX(5px);
+.legend-item::before {
+    content: '';
+    display: block;
+    width: 0.7rem;
+    height: 0.7rem;
+    background: black;  /* Remove background */
+    border: 1.5px solid rgba(255, 255, 255, 0.69);  /* Add border */
+    border-radius: 2px;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: absolute;
 }
 
-.legend-item.active {
-    background: rgba(255, 255, 255, 0.473);
+.legend-content {
+    position: absolute;
+    left: 2rem; /* Adjusted to account for centered item */
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(12px);
+    padding: 0.75rem 1rem;
+    border-radius: 0.375rem;
+    min-width: clamp(160px, 15vw, 250px);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-0.625rem);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.legend-item:hover::before {
+    background: rgba(255, 0, 0, 0.6);
+    box-shadow: 0 0 0.75rem rgba(255, 0, 0, 0.4);
+    transform: rotate(45deg);
+}
+
+.legend-item:hover .legend-content {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+}
+
+.legend-item.active::before {
+    background: rgb(255, 0, 0, 0.6);
+    box-shadow: 0 0 1rem rgba(255, 0, 0, 0.6);
+    transform: rotate(45deg);
+    border-color: transparent;
+}
+
+.legend-item.active .legend-content {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+    border-color: rgba(255, 0, 0, 0.3);
 }
 
 .region-title {
-    font-size: 1rem;
+    font-size: clamp(0.75rem, 1.5vw, 0.875rem);
     font-weight: 500;
     margin-bottom: 0.25rem;
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .region-description {
-    font-size: 0.875rem;
-    opacity: 0.7;
+    font-size: clamp(0.7rem, 1.3vw, 0.75rem);
+    color: rgba(255, 255, 255, 0.7);
 }
 
 /* Info Panel */
-/* Modified CSS for info-panel */
 #info-panel {
     position: fixed;
     right: 0;
-    top: 0;
+    top: 5%;
     width: 80%;
-    height: 100%;
+    height: 90%;
     background: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(5px);
-    padding: 2rem;
+    padding: 5vh 5vw;
     box-sizing: border-box;
     transform: translateX(100%);
     transition: transform 0.3s ease-in-out;
     overflow-y: auto;
-    border-left: 1px solid rgba(203, 203, 24, 0.1);
-    z-index: 100;
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+    z-index: 90;
 }
 
 #info-panel.active {
     transform: translateX(0);
 }
 
+#info-panel h2 {
+    font-size: clamp(1.25rem, 3vw, 1.5rem);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#region-details {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#region-details.changing {
+    opacity: 0;
+    transform: translateY(1.25rem);
+}
+
 .close-panel {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
+    top: 5%;
+    right: 5%;
     background: none;
     border: none;
     color: white;
     cursor: pointer;
     font-size: 1.5rem;
     opacity: 0.7;
-    transition: opacity 0.3s ease;
+    transition: all 0.3s ease;
     padding: 0.5rem;
     z-index: 101;
 }
 
-
-#info-panel h2 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
 .close-panel:hover {
     opacity: 1;
-}
-
-/* Controls */
-.controls {
-    position: fixed;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 1rem;
-    z-index: 10;
-}
-
-.control-button {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-}
-
-.control-button:hover {
-    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(90deg);
+    color: crimson;
 }
 
 /* Loading Screen */
@@ -215,20 +269,21 @@ body {
 }
 
 .loading-spinner {
-    width: 50px;
-    height: 50px;
-    border: 3px solid rgba(255, 255, 255, 0.1);
-    border-top: 3px solid white;
+    width: clamp(2rem, 6vw, 3.125rem);
+    height: clamp(2rem, 6vw, 3.125rem);
+    border: 0.1875rem solid rgba(255, 255, 255, 0.1);
+    border-top: 0.1875rem solid white;
     border-radius: 50%;
     animation: spin 1s linear infinite;
     margin-bottom: 1rem;
 }
 
-/* animations */
+/* Animations */
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
 @keyframes pulse {
     0% { opacity: 1.0; }
     50% { opacity: 0.3; }
@@ -236,24 +291,38 @@ body {
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
+@media (max-width: 48rem) { /* 768px */
     #brain-legend {
-        left: 1rem;
-        width: calc(100% - 2rem);
-        max-width: 300px;
+        left: 1%;
+        gap: 3vh;
+    }
+    
+    .legend-content {
+        min-width: clamp(140px, 50vw, 200px);
+    }
+    
+    .header {
+        padding: 3vh 3vw;
     }
 
     #info-panel {
         width: 100%;
-        right: -100%;
-        transform: translateX(100%);
+        padding: 3vh 3vw;
     }
-
-    .header {
-        padding: 1rem;
+    
+    .close-panel {
+        top: 3%;
+        right: 3%;
     }
+}
 
-    .header h1 {
-        font-size: 1.2rem;
+/* For very small screens */
+@media (max-width: 30rem) { /* 480px */
+    #brain-legend {
+        gap: 2vh;
+    }
+    
+    .legend-content {
+        min-width: clamp(120px, 60vw, 160px);
     }
 }
