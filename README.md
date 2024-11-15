@@ -8,6 +8,7 @@ Code for my [ETH website](https://n.ethz.ch/~lejiang/)
 ## BugsToFix
 - [ ] closing pages: esc button
 - [ ] close legend panel when moving from legend.page to site-info page
+- [ ] devTool function not working 
 
 > [!WARNING]
 > Website still under development, so there are frequent updates which might lead to cookie conflicts.  
