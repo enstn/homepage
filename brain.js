@@ -56,7 +56,7 @@ export class BrainVisualization {
         this.mouse = new THREE.Vector2();
         
         this.baseColor = new THREE.Color(0xFFFFFF);
-        this.hoverColors = [new THREE.Color(0xFFCB9A)]; 
+        this.hoverColors = [new THREE.Color(0xFF0000)]; 
 
         this.isInfoPanelActive = false;
         this.setupInfoPanelListener();

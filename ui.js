@@ -83,6 +83,7 @@ export function setupUIInteractions() {
     }
 
     setupTitleRefresh();
+    setupInfo();
     setupMagneticLegend();
 }
 
@@ -94,6 +95,16 @@ function setupTitleRefresh() {
             e.preventDefault();
             e.stopPropagation();
             window.location.reload();
+        });
+    }
+}
+
+function setupInfo() {
+    const siteInfo = document.getElementById('site-info');
+
+    if (siteInfo) {
+        siteInfo.addEventListener('click',(e) => {
+                showRegionDetails('info');
         });
     }
 }
@@ -221,6 +232,24 @@ function showRegionDetails(region) {
                 element.style.borderLeft = `3px solid ${content.accentColor}`;
             });
         }
+
+        // Add event listeners for region links
+        detailsContainer.querySelectorAll('.region-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                const targetRegion = e.target.dataset.region;
+                const targetLegendItem = document.querySelector(`.legend-item[data-region="${targetRegion}"]`);
+                if (targetLegendItem) {
+                    // Remove active class from all legend items
+                    document.querySelectorAll('.legend-item').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    // Add active class to target item
+                    targetLegendItem.classList.add('active');
+                    // Show the target region's content
+                    showRegionDetails(targetRegion);
+                }
+            });
+        });
 
         detailsContainer.classList.remove('changing');
     }, 300);

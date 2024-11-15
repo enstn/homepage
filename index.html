@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>lejiang</title>
+    <title>Lai's personal website</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Warning -->
-    <div class="info">Hover over the boxes or the brain to explore.</div>
-    
+    <!-- Instruction -->
+    <!-- <div class="info">Hover over the boxes or the brain to explore.</div> -->
+
     <!-- Loading Screen -->
     <div id="loading-screen">
         <div class="loading-content">
@@ -24,9 +24,7 @@
         <span class="title-wrapper">
             <h1 id="site-title">idk title yet.</h1>
         </span>
-        <p>still testing and playing around;</p>
-        <p>don't blame me if I crash ur browser;</p>
-        <p>seriously, i warned you;</p>
+        <p id="site-info">Do. Not. Click.</p>
     </header>
 
     <!-- Brain Container -->
@@ -38,29 +36,37 @@
 
         <div class="legend-item" data-region="1">
             <div class="legend-content">
-                <h3 class="region-title">occipital lobe</h3>
-                <p class="region-description">bci vocal imagination</p>
+                <h3 class="region-title">Telepathy</h3>
+                <p class="region-description">dating skills in 2024 be like</p>
             </div>
         </div>
 
         <div class="legend-item" data-region="2">
             <div class="legend-content">
-                <h3 class="region-title">bruder was</h3>
-                <p class="region-description">format example</p>
+                <h3 class="region-title">Meaning of Life</h3>
+                <p class="region-description">obviously eternal ponging</p>
             </div>
         </div>
 
         <div class="legend-item" data-region="3">
             <div class="legend-content">
-                <h3 class="region-title">3</h3>
-                <p class="region-description">idk</p>
+                <h3 class="region-title">?</h3>
+                <p class="region-description">coming soon</p>
             </div>
         </div>
 
-        <div class="legend-item" data-region="4">
+
+        <div class="legend-item" data-region="random">
             <div class="legend-content">
-                <h3 class="region-title">4</h3>
-                <p class="region-description">idk</p>
+                <h3 class="region-title">Random</h3>
+                <p class="region-description">must. increase. entropy.</p>
+            </div>
+        </div>
+
+        <div class="legend-item" data-region="booklist">
+            <div class="legend-content">
+                <h3 class="region-title">Booklist</h3>
+                <p class="region-description">wait, this guy can read?</p>
             </div>
         </div>
 
@@ -90,17 +96,17 @@
     <script type="module">
         import { BrainVisualization } from './brain.js';
         import { setupUIInteractions, devTools } from './ui.js';
-        
+
         let brainViz;
-        
+
         // Make devTools available globally
         window.devTools = devTools;
-        
+
         document.addEventListener('DOMContentLoaded', async () => {
             try {
                 brainViz = new BrainVisualization();
                 setupUIInteractions();
-                
+
                 const loadingScreen = document.getElementById('loading-screen');
                 setTimeout(() => {
                     loadingScreen.style.opacity = '0';
