@@ -1,5 +1,6 @@
 // ui.js
-import { regionContent } from './content.js';
+import { regionContent} from './content.js';
+window.showRegionDetails = showRegionDetails;
 
 export function setupMagneticLegend() {
     const items = document.querySelectorAll('.legend-item');
@@ -133,13 +134,15 @@ export const devTools = {
 };
 
 // region content stuff
-function showRegionDetails(region) {
+function showRegionDetails(region, subpage = null) {
     const infoPanel = document.getElementById('info-panel');
     const detailsContainer = document.getElementById('region-details');
-    const content = regionContent[region];
+    const mainContent = regionContent[region];
+
+    const content = subpage ? mainContent.subpages[subpage] : mainContent;
 
     if (!content) {
-        console.error(`No content found for region: ${region}`);
+        console.error(`No content found for ${subpage ? 'subpage' : 'region'}: ${subpage || region}`);
         return;
     }
 
@@ -152,13 +155,19 @@ function showRegionDetails(region) {
     setTimeout(() => {
         let htmlContent = `
             <div class="region-header">
+                ${subpage ? `
+                    <div class="subpage-nav">
+                        <button class="nav-back" onclick="window.showRegionDetails('${region}')">
+                            ← Back to ${mainContent.title}
+                        </button>
+                    </div>
+                ` : ''}
                 <h2>${content.title}</h2>
                 <div class="content-divider" style="margin: 0.5rem auto"></div>
                 ${content.subtitle ? `<h3>${content.subtitle}</h3>` : ''}
             </div>
             <div class="region-content">
         `;
-
         // Build content based on content types
         content.content.forEach(item => {
             switch (item.type) {
@@ -217,6 +226,27 @@ function showRegionDetails(region) {
                         ></div>
                     `;
                     break;
+                case 'custom-booklist':
+                    htmlContent += `
+                        <div class="book-list">
+                            ${item.items.map(book => {
+                                // Fix the score logic
+                                const scoreClass = parseInt(book.score) >= 8 ? 'score-high' : '';
+                                
+                                return `
+                                    <div class="book-item">
+                                        <div class="book-info">
+                                            <span class="region-link" data-region="${region}" data-subpage="${book.id}">${book.title}</span>
+                                            <span class="book-author">by ${book.author}</span>
+                                        </div>
+                                        <div class="book-dots"></div>
+                                        <div class="book-score ${scoreClass}">${book.score}/10</div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    `;
+                    break;
             }
         });
 
@@ -233,20 +263,23 @@ function showRegionDetails(region) {
             });
         }
 
-        // Add event listeners for region links
+        // Handle region links
         detailsContainer.querySelectorAll('.region-link').forEach(link => {
             link.addEventListener('click', (e) => {
                 const targetRegion = e.target.dataset.region;
-                const targetLegendItem = document.querySelector(`.legend-item[data-region="${targetRegion}"]`);
-                if (targetLegendItem) {
-                    // Remove active class from all legend items
-                    document.querySelectorAll('.legend-item').forEach(item => {
-                        item.classList.remove('active');
-                    });
-                    // Add active class to target item
-                    targetLegendItem.classList.add('active');
-                    // Show the target region's content
-                    showRegionDetails(targetRegion);
+                const targetSubpage = e.target.dataset.subpage;
+                
+                if (targetSubpage) {
+                    showRegionDetails(targetRegion, targetSubpage);
+                } else {
+                    const targetLegendItem = document.querySelector(`.legend-item[data-region="${targetRegion}"]`);
+                    if (targetLegendItem) {
+                        document.querySelectorAll('.legend-item').forEach(item => {
+                            item.classList.remove('active');
+                        });
+                        targetLegendItem.classList.add('active');
+                        showRegionDetails(targetRegion);
+                    }
                 }
             });
         });
@@ -254,3 +287,7 @@ function showRegionDetails(region) {
         detailsContainer.classList.remove('changing');
     }, 300);
 }
+
+window.handleRegionLink = function(region) {
+    showRegionDetails(region);
+};

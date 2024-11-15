@@ -57,7 +57,7 @@ body {
     font-size: 2.5rem;
     font-weight: 500;
     margin: 0;
-    color:white;
+    color: white;
     display: inline-block;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -94,16 +94,16 @@ body {
     flex-direction: column;
     gap: 4vh;
     padding: 1rem;
-    width: 2rem; /* Added fixed width for centering */
-    align-items: center; /* Center items horizontally */
+    width: 2rem;
+    align-items: center;
 }
 
 #brain-legend::before {
     content: '';
     position: absolute;
     bottom: 2%;
-    left: 50%; /* Center the line */
-    transform: translateX(-50%); /* Ensure perfect centering */
+    left: 50%;
+    transform: translateX(-50%);
     height: 150%;
     width: 2px;
     background: linear-gradient(
@@ -127,7 +127,7 @@ body {
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     height: 1.5rem;
-    width: 1.5rem; /* Added fixed width */
+    width: 1.5rem;
     will-change: transform;
 }
 
@@ -136,8 +136,8 @@ body {
     display: block;
     width: 0.7rem;
     height: 0.7rem;
-    background: black;  /* Remove background */
-    border: 1.5px solid rgba(255, 255, 255, 0.69);  /* Add border */
+    background: black;
+    border: 1.5px solid rgba(255, 255, 255, 0.69);
     border-radius: 2px;
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     position: absolute;
@@ -145,7 +145,7 @@ body {
 
 .legend-content {
     position: absolute;
-    left: 2rem; /* Adjusted to account for centered item */
+    left: 2rem;
     background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(12px);
     padding: 0.75rem 1rem;
@@ -229,7 +229,7 @@ body {
     transform: translateY(1.25rem);
 }
 
-/* content config*/
+/* Content Config */
 .region-header {
     margin-bottom: 0rem;
 }
@@ -242,7 +242,7 @@ body {
 .region-header h3 {
     font-size: 1rem;
     opacity: 0.69;
-    font-weight:lighter;
+    font-weight: lighter;
 }
 
 .region-content {
@@ -353,13 +353,127 @@ body {
 .content-divider {
     height: 1px;
     width: 100%;
-    max-width: 100%; /* Makes it slightly less than window width */
+    max-width: 100%;
     margin: 1.5rem;
     position: relative;
     background: rgba(255, 255, 255, 0.1);
 }
 
-/* Text styling classes */
+/* Book List Styles */
+.book-list {
+    margin: 2rem 0;
+}
+
+.book-item {
+    margin: 1rem 0;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.book-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateX(5px);
+}
+
+.book-info {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.book-author {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.9rem;
+    font-style: italic;
+}
+
+.book-dots {
+    flex: 1;
+    margin: 0 1rem;
+    height: 1px;
+    border-bottom: 1px dotted rgba(255, 255, 255, 0.2);
+}
+
+.book-score {
+    padding: 0.25rem 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    color: rgba(255, 255, 255, 0.8);
+    font-family: monospace;
+    font-size: 0.9rem;
+    min-width: 4rem;
+    text-align: center;
+}
+
+.score-high { 
+    color: rgba(255, 165, 0, 0.8); /* Gold color for scores >= 8 */
+}
+
+/* dotted lines for blog entries */
+/* Add to your styles.css */
+
+.date-item {
+    margin: 1rem 0;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.date-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateX(5px);
+}
+
+.date-dots {
+    flex: 1;
+    margin: 0 1rem;
+    height: 1px;
+    border-bottom: 1px dotted rgba(255, 255, 255, 0.2);
+}
+
+.date-label {
+    padding: 0.25rem 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    color: rgba(255, 255, 255, 0.5);
+    font-family: monospace;
+    font-size: 0.9rem;
+    min-width: 5.5rem;
+    text-align: center;
+}
+
+/* Subpage Navigation */
+.subpage-nav {
+    margin-bottom: 1.5rem;
+}
+
+.nav-back {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    padding: 0.5rem 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.nav-back:hover {
+    color: rgba(255, 0, 0, 0.8);
+    transform: translateX(-5px);
+}
+
+/* Text Styling Classes */
 .text-highlight {
     background: rgba(255, 255, 0, 0.2) !important;
     padding: 0px 4px !important;
@@ -391,7 +505,6 @@ body {
     border-radius: 4px !important;
     font-weight: bold !important;
 }
-/*----------------------------------------*/
 
 .close-panel {
     position: absolute;
@@ -479,6 +592,18 @@ body {
     .close-panel {
         top: 3%;
         right: 3%;
+    }
+
+    .panel-navigation {
+        top: 1rem;
+        right: 1rem;
+        gap: 0.5rem;
+    }
+    
+    .nav-button {
+        width: 2rem;
+        height: 2rem;
+        font-size: 1.2rem;
     }
 }
 

@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
+const size = 1.1;
+
 const vertexShader = `
     uniform vec3 uPointer;
     uniform vec3 uColor;
@@ -103,7 +105,7 @@ export class BrainVisualization {
 
     _createCamera() {
         this.camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.1, 100);
-        this.camera.position.set(0, 0, 1.2);
+        this.camera.position.set(0, 0, size);
     }
 
     _createRenderer() {
@@ -275,7 +277,7 @@ export class BrainVisualization {
     animate() {
         requestAnimationFrame(() => this.animate());
         this.camera.lookAt(0, 0, 0);
-        this.camera.position.z = this.isMobile ? 2.3 : 1.2;
+        this.camera.position.z = this.isMobile ? 2.3 : size;
         this.renderer.render(this.scene, this.camera);
     }
 }

@@ -70,6 +70,40 @@ OR
 },
 */
 
+/* subpage example
+title: "Imagined Speech Recognition",
+        subtitle: "using BCI to achieve telepathy - because, unfortunately, the magical owl never showed up at my doorstep",
+        content: [
+            {
+                type: "link",
+                title: "github/enstn/braincomputerinterface",
+                url: "https://github.com/enstn/braincomputerinterface",
+                description: "code documentation",
+                icon: "🐌" // Optional emoji icon
+            },
+            {
+                type: "divider"
+            },
+            {
+                type: "text",
+                content: "<span class=\"region-link\" data-region=\"1\" data-subpage=\"1.1\">subpage embedding test</span>"
+            }
+        ],
+        subpages: {
+            "1.1": {
+                title: "test subpage embedding",
+                subtitle: "test subtitle",
+                content: [
+                    {
+                        type: "text",
+                        content: "blablabla."
+                    },
+                ]
+            },
+        },
+        accentColor: "rgba(255, 255, 255, 1)"
+*/
+
 export const regionContent = {
     "info": {
         title: "About This Website",
@@ -85,20 +119,20 @@ export const regionContent = {
             },
             {
                 type: "highlight",
-                content: "This is where I save & document my favourite discoveries and <span class=\"region-link\" data-region=\"booklist\">readings</span> for my research journey. <br> -> especially stuff related to <span class=\"text-highlight-bold\">consciousness</span>,<span class=\"text-highlight-bold\">machine learning</span>, <span class=\"text-highlight-bold\">neurobiology</span> & <span class=\"text-highlight-bold\">neuromorphic engineering</span> <br> (And everything else my 86 billion neurons might take fancy in)"
+                content: "This website is being used to document my discovery progress and <span class=\"region-link\" data-region=\"booklist\">readings</span> reagarding: <br> ->  <span class=\"text-highlight-bold\">consciousness</span>,<span class=\"text-highlight-bold\">machine learning</span>, <span class=\"text-highlight-bold\">neurobiology</span> & <span class=\"text-highlight-bold\">neuromorphic engineering</span> <br> (And some other random stuff my 86 billion neurons took an interest in)"
             },
             {
                 type: "list",
-                title: "A Few Things About Me",
+                title: "Few Things About Me",
                 items: [
                     "I'm an electrical engineering student at ETH Zurich",
-                    "Free time is currently spent on <span class=\"region-link\" data-region=\"2\">simulated neuron pong agent</span> & <span class=\"region-link\" data-region=\"1\">imagined speech recognition</span>",
-                    "I have a massive curiosity crush on the topics mentioned above <br> -> one of the reasons I created this website is to grant my sister peace from my yapping",
+                    "Currently working on <span class=\"region-link\" data-region=\"2\">simulated neuron pong agent</span> & <span class=\"region-link\" data-region=\"1\">imagined speech recognition</span>",
+                    "I have a massive curiosity crush on the topics mentioned above",
                 ]
             },
             {
                 type: "highlight",
-                content: "To explore my discoveries, just hover over the boxes on your left."
+                content: "To explore the website, just hover over the boxes on your left."
             },
             {
                 type: "divider",
@@ -111,7 +145,7 @@ export const regionContent = {
             },
             {
                 type: "text",
-                content: "-> Learn from your mistakes. Do <span class=\"text-bold\">not</span> scroll down further. I warned you."
+                content: "-> Learn from your mistakes. Do <span class=\"text-bold\">not</span> scroll down further. Consider this a warning."
             },
             {
                 type: "text",
@@ -125,14 +159,6 @@ export const regionContent = {
         ],
         accentColor: "rgba(255, 0, 0, 0.69)"
     },
-    "booklist": {
-        title: "Readings",
-        subtitle: "",
-        content: [
-            
-        ],
-        accentColor: "rgba(255, 255, 255, 1)"
-    },
     "random": {
         title: "Random Fun Facts",
         subtitle: "",
@@ -140,10 +166,6 @@ export const regionContent = {
             {
                 type: "highlight",
                 content: "First battery was invented because people were arguing about how to correctly shock frog legs. <br> ~ around 1781 | Volta vs. Galvani on inherent animal electricity fluid"
-            },
-            {
-                type: "highlight",
-                content: "T. Edison tried to establish the idea of dangerous AC by corrupting & influencing the frist ever electric chair to be powered by AC. <br> ~ date | current war"
             },
             {
                 type: "highlight",
@@ -168,14 +190,52 @@ export const regionContent = {
             },
             {
                 type: "text",
-                content: "The code is private at the moment. <update & explanation>"
+                content: `
+                <div class="date-item">
+                    <span class="region-link" data-region="1" data-subpage="1.1">subpage embedding test</span>
+                    <div class="date-dots"></div>
+                    <span class="date-label">15.11.24</span>
+                </div>
+                `
             },
+            {
+                type: "text",
+                content: `
+                <div class="date-item">
+                    <span class="region-link" data-region="1" data-subpage="1.2">project setup & grand overview</span>
+                    <div class="date-dots"></div>
+                    <span class="date-label">15.11.24 | 06:01</span>
+                </div>
+                `
+            }
         ],
+        subpages: {
+            "1.1": {
+                title: "test subpage embedding",
+                subtitle: "test subtitle",
+                content: [
+                    {
+                        type: "text",
+                        content: "blablabla."
+                    },
+                ]
+            },
+            "1.2": {
+                title: "project setup & overview",
+                subtitle: "test subtitle",
+                content: [
+                    {
+                        type: "text",
+                        content: "blablabla."
+                    },
+                ]
+            }
+        },
         accentColor: "rgba(255, 255, 255, 1)"
     },
     "2": {
         title: "Simulated Neuron Pong Agent",
-        subtitle: "at least these neuron don't have to search for a meaning of life - for them, it's pong",
+        subtitle: "these neurons already discovered their meaning of life: playing pong",
         content: [
             {
                 type: "link",
@@ -188,15 +248,48 @@ export const regionContent = {
                 type: "divider"
             },
             {
-                type: "image",
-                src: "./images/neuropong_readme",
-                alt: "why you scrolling so far"
+                type: "text",
+                content: `
+                <div class="date-item">
+                    <span class="region-link" data-region="2" data-subpage="2.1">one</span>
+                    <div class="date-dots"></div>
+                    <span class="date-label">15.11.24 | 06:29</span>
+                </div>
+                `
             },
             {
                 type: "text",
-                content: "I'll have to update & describe my progress. Maybe I should do a Notion embedding."
+                content: `
+                <div class="date-item">
+                    <span class="region-link" data-region="2" data-subpage="2.2">two</span>
+                    <div class="date-dots"></div>
+                    <span class="date-label">15.11.24 | 06:29</span>
+                </div>
+                `
             }
         ],
+        subpages: {
+            "2.1": {
+                title: "one",
+                subtitle: "test subtitle",
+                content: [
+                    {
+                        type: "text",
+                        content: "blablabla."
+                    },
+                ]
+            },
+            "2.2": {
+                title: "two",
+                subtitle: "test subtitle",
+                content: [
+                    {
+                        type: "text",
+                        content: "blablabla."
+                    },
+                ]
+            }
+        },
         accentColor: "rgba(255, 255, 255, 1)"
     },
     "3": {
@@ -207,4 +300,58 @@ export const regionContent = {
         ],
         accentColor: "rgba(255, 0, 0, 0.6)"
     },
+    "booklist": {
+        title: "Readings",
+        subtitle: "rating based on change of behaviour / perspective caused by said book",
+        content: [
+            {
+                type: "custom-booklist",
+                items: [
+                    {
+                        id: "brain-changes",
+                        title: "The Brain that Changes Itself",
+                        author: "Norman Doidge",
+                        score: 9
+                    },
+                    {
+                        id: "place-holder",
+                        title: "placeholer for template",
+                        author: "",
+                        score: 0
+                    }
+                ]
+            }
+        ],
+        subpages: {
+            "brain-changes": {
+                title: "The Brain that Changes Itself",
+                subtitle: "Norman Doidge",
+                content: [
+                    {
+                        type: "highlight",
+                        content: "Score: 9/10 - Fascinating insights into neuroplasticity"
+                    },
+                    {
+                        type: "text",
+                        content: "notes about this book..."
+                    }
+                ]
+            },
+            "place-holder": {
+                title: "template",
+                subtitle: "blabla",
+                content: [
+                    {
+                        type: "highlight",
+                        content: "Score: 0/10 - blabla"
+                    },
+                    {
+                        type: "text",
+                        content: "notes about this book..."
+                    }
+                ]
+            }
+        },
+        accentColor: "rgba(255, 255, 255, 1)"
+    }
 };
