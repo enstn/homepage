@@ -3,6 +3,7 @@ Code for my [ETH website](https://n.ethz.ch/~lejiang/)
 
 ## ToDo
 - [ ] very simple project progress time-line
+- [ ] git-hub / CV right eck corner
 
 ## BugsToFix
 - [ ] closing pages: esc button
