@@ -2,10 +2,10 @@
 Code for my [ETH website](https://n.ethz.ch/~lejiang/)
 
 ## ToDo
-- [ ] test cortex highlight: glb fragment model load & lighting | some kind of transition with visibility  
 
 ## BugsToFix
 - [ ] closing pages: esc button
+- [ ] close legend panel when moving from legend.page to site-info page
 
 > [!WARNING]
-> Website still under construction. Might crash your browser. It already crashed mine several times during my learning process due to horrendous rendering code. I also didnt look at mobile implementation yet.
+> Website still under development, so there are frequent updates which might lead to cookie conflicts.  
