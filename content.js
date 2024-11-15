@@ -115,11 +115,11 @@ export const regionContent = {
             },
             {
                 type: "text",
-                content: "300,000 years of evolution was required for this click-bait to work. Be proud."
+                content: "300,000 years of evolution + autonomy were required for this click-bait to work. Be proud."
             },
             {
                 type: "highlight",
-                content: "This website is being used to document my discovery progress and <span class=\"region-link\" data-region=\"booklist\">readings</span> reagarding: <br> ->  <span class=\"text-highlight-bold\">consciousness</span>,<span class=\"text-highlight-bold\">machine learning</span>, <span class=\"text-highlight-bold\">neurobiology</span> & <span class=\"text-highlight-bold\">neuromorphic engineering</span> <br> (And some other random stuff my 86 billion neurons took an interest in)"
+                content: "This website documents my discovery progress and <span class=\"region-link\" data-region=\"booklist\">readings</span> reagarding: <br> ->  <span class=\"text-highlight-bold\">consciousness</span>,<span class=\"text-highlight-bold\">machine learning</span>, <span class=\"text-highlight-bold\">neurobiology</span> & <span class=\"text-highlight-bold\">neuromorphic engineering</span> <br> (And some other random stuff my 86 billion neurons took an interest in)"
             },
             {
                 type: "list",
@@ -145,7 +145,7 @@ export const regionContent = {
             },
             {
                 type: "text",
-                content: "-> Learn from your mistakes. Do <span class=\"text-bold\">not</span> scroll down further. Consider this a warning."
+                content: "Learn from your mistakes. Do <span class=\"text-bold\">not</span> scroll down to the end."
             },
             {
                 type: "text",
@@ -234,8 +234,8 @@ export const regionContent = {
         accentColor: "rgba(255, 255, 255, 1)"
     },
     "2": {
-        title: "Simulated Neuron Pong Agent",
-        subtitle: "these neurons already discovered their meaning of life: playing pong",
+        title: "Part One: Training Simulated Neurons",
+        subtitle: "",
         content: [
             {
                 type: "link",
@@ -293,8 +293,8 @@ export const regionContent = {
         accentColor: "rgba(255, 255, 255, 1)"
     },
     "3": {
-        title: "title",
-        subtitle: "subtitle",
+        title: "Part Two: Training Biological Neurons",
+        subtitle: "imaging pong as your meaning of life",
         content: [
             
         ],
@@ -302,7 +302,7 @@ export const regionContent = {
     },
     "booklist": {
         title: "Readings",
-        subtitle: "rating based on change of behaviour / perspective caused by said book",
+        subtitle: "rating based on degree of perspective / behavior change caused by said book",
         content: [
             {
                 type: "custom-booklist",
@@ -329,12 +329,8 @@ export const regionContent = {
                 content: [
                     {
                         type: "highlight",
-                        content: "Score: 9/10 - Fascinating insights into neuroplasticity"
+                        content: "9/10 - Fascinating insights into neuroplasticity"
                     },
-                    {
-                        type: "text",
-                        content: "notes about this book..."
-                    }
                 ]
             },
             "place-holder": {

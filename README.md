@@ -2,6 +2,7 @@
 Code for my [ETH website](https://n.ethz.ch/~lejiang/)
 
 ## ToDo
+- [ ] very simple project progress time-line
 
 ## BugsToFix
 - [ ] closing pages: esc button
