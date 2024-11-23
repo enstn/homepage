@@ -263,16 +263,16 @@ export const regionContent = {
                     {
                         type: "text",
                         content: `
-			            Reminds you of Sci-Fi? Or some black magic vodoo written in fantasy? To be honest, I wasn't aware of this possibility too - until a few weeks ago. 
-                        So I invite you to join me, dear reader. This will be our technological crusade against the universe's cruel refusal to gift humanity with magic.
-                        This might be our most promising shot yet for archieving man-made telepathy without touching a scalpel. <br> <br>
+			            Reminds you of Sci-Fi? Or some black magic vodoo written in fantasy? To be honest, I too wasn't aware of this possibility... until a few weeks ago. 
+                        So, dear reader, I invite you to join me. This will be our technological crusade against the universe's cruel refusal to gift humanity with magic.
+                        For this might be our most promising shot yet for archieving man-made telepathy without touching a scalpel. <br> <br>
 
 			            Let me set the stage before we head straight in. My university mandates students to attend so-called P&S's. Basically, you visit a "lab" 
 				        for one entire semester (most probably a painfully plain classroom). By doing so, the all-mighty education system hopes to bestow hands-on-experience upon our 
 			            little peasant brains. Sure enough, three hours on a random Tuesday afternoon will definitely grant <span class=\"text-italic\">profound</span> insights into the technological 
-			            battlefront spearheaded by generations of homo sapiens. Obviously. Not. You dimwit. <br> <br>
+			            landscape molded by homo sapiens. Obviously not. Dimwit. <br> <br>
 
-			            Naturally, P&S thus turns into a game of min-maxing credit-efficiency. You have the grand choice between: 
+			            Naturally, P&S thus turns into a game of min-maxing credit-efficiency. You have the grand choice between the following: 
                         `
                     },
                     {
@@ -283,7 +283,7 @@ export const regionContent = {
                             invest extra effort with no extra credits to explore spectacular (but exam-irrelevant) concepts
                             `,
                             `
-                            choose something vaguely interesting which doesn't suffocate your time so you can safely survive your core courses & exams
+                            choose something vaguely interesting which doesn't suffocate your exam time 
                             `,
                         ]
                     },
@@ -291,8 +291,8 @@ export const regionContent = {
                         type: "text",
                         content: `
                         The true spirit of education demands option one, but who cares about spirits in this day and age anyways? (Besides, maybe, alcoholics.) Like seriously.
-			            What truly matters is passing exams, quickly getting a degree and crunching excell sheets for five decades.
-                        A modern human being shall only exist to maximise shareholders value and only stop once to upload itself into an eternal game of death jockeying.
+			            What truly matters is option too: passing exams, quickly getting a degree and crunching excell sheets for five decades.
+                        A modern human being shall exist exclusively to maximise shareholders value and stop only once to upload itself into an eternal game of death jockeying.
                         `
                     },
                     {
@@ -307,16 +307,16 @@ export const regionContent = {
                     {
                         type: "text",
                         content: `
-                        Jokes aside, I'm no better. Almost all of my previous P&S were selected based on credit-efficiency with a slight interest in the topics covered.
-                        That said, my dear reader, if you were willing to sacrifice your free time and a quite a bit of beauty sleep... and if you were willing to enthusiastically dig deeper into their related 
-                        research field - you'll find amazing professors and PhDs welcoming our combined single-digit IQ.
-                        P&S time-bounds simply don't allow the teachers to go beyond the surface. And most students don't venture beyond the shown surface. I'm guilty as well, I'm trying to change.
+                        Jokes aside, I'm no better. Almost all of my previous P&S were selected based on credit-efficiency with a slight interest in the covered topics.
+                        That being said, if you were willing to sacrifice your free time & quite a bit of beauty sleep, and if you were willing to dig deeper into P&S related 
+                        research fields - you'll find amazing professors and PhDs welcoming our combined single-digit IQ.
+                        P&S time-bounds simply don't allow the teachers to go beyond the surface. And most students don't venture beyond the shown surface. I'm guilty as well so I'm trying to change.
                          <br> <br> 
                         An extra mail, an extra question after class or extra paper request followed by a response might not be as magical as a talking cat or letter owl, but it sure is mighty.
-                        After all, you just gained a kind-hearted opportunity to learn from the wizards of 21st century. Their mentorship & condensed knowledge will be your weapon to wield against the cold universe.
+                        After all, you just gained a kind-hearted opportunity to learn from the wizards of the 21st century. Their mentorship & condensed knowledge will be your weapon to wield against the universe.
                         <br> <br>
 
-                        Which brings us back to our journey into telepathy. On one snowy November night, my screen would light up - dispersing a single mail-preview into the dim room.
+                        Which brings us back to our journey into telepathy, started with a single mail:
                         `
                     },
                     {
@@ -331,7 +331,7 @@ export const regionContent = {
                     {
                         type: "text",
                         content: `
-                        And so, dear reader, we begin. Let's imagine letters, wielding the power of 21st-century wizardry, and see just how close we can get to breaking the barriers between mind and machine!
+                        And so, dear reader, we begin. Let's imagine letters, wielding the power of 21st-century wizardry, and see just how close we can get to breaking the barriers between mind and machine.
                         `
                     },
                     {
