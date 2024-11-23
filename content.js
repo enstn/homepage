@@ -107,32 +107,29 @@ title: "Imagined Speech Recognition",
 export const regionContent = {
     "info": {
         title: "About This Website",
-        subtitle: "congrats on excercising free will, you trigger-friendly bastard",
+        subtitle: "Welcome, you magnificent bloop of cells!",
         content: [
             {
                 type: "highlight",
-                content: "WELCOME, YOU MAGNIFICENT BLOOP OF CELLS"
+                content: "This website documents my discovery progress and <span class=\"region-link\" data-region=\"booklist\">readings</span> reagarding: <br> ->  <span class=\"text-highlight-bold\">consciousness</span>,<span class=\"text-highlight-bold\">machine learning</span>, <span class=\"text-highlight-bold\">neurobiology</span> & <span class=\"text-highlight-bold\">neuromorphic engineering</span>"
             },
             {
                 type: "text",
-                content: "300,000 years of evolution + autonomy were required for this click-bait to work. Be proud."
-            },
-            {
-                type: "highlight",
-                content: "This website documents my discovery progress and <span class=\"region-link\" data-region=\"booklist\">readings</span> reagarding: <br> ->  <span class=\"text-highlight-bold\">consciousness</span>,<span class=\"text-highlight-bold\">machine learning</span>, <span class=\"text-highlight-bold\">neurobiology</span> & <span class=\"text-highlight-bold\">neuromorphic engineering</span> <br> (And some other random stuff my 86 billion neurons took an interest in)"
+                content: "... and some other <span class=\"region-link\" data-region=\"random\">random stuff</span> to further increase entropy."
             },
             {
                 type: "list",
                 title: "Few Things About Me",
                 items: [
-                    "I'm an electrical engineering student at ETH Zurich",
-                    "Currently working on <span class=\"region-link\" data-region=\"2\">simulated neuron pong agent</span> & <span class=\"region-link\" data-region=\"1\">imagined speech recognition</span>",
-                    "I have a massive curiosity crush on the topics mentioned above",
+                    "5th semester electrical engineering student at ETH Zurich",
+                    "massive curiosity crush on the topics mentioned above",
+                    "eternal yapping regarding the topics, this website partially exists to grant my family peace",
+                    "currently developing telepathy; here's the <span class=\"region-link\" data-region=\"1\" data-subpage=\"1.1\">intro</span> if you're interested",
                 ]
             },
             {
                 type: "highlight",
-                content: "To explore the website, just hover over the boxes on your left."
+                content: "To explore the website, just hover over the boxes on your left or click on the links above :)"
             },
             {
                 type: "divider",
@@ -145,11 +142,11 @@ export const regionContent = {
             },
             {
                 type: "text",
-                content: "Learn from your mistakes. Do <span class=\"text-bold\">not</span> scroll down to the end."
+                content: "Don't scroll down to the end. This is blatant scroll bait."
             },
             {
                 type: "text",
-                content: "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>"
+                content: "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>"
             },
             {
                 type: "image",
@@ -160,29 +157,72 @@ export const regionContent = {
         accentColor: "rgba(255, 0, 0, 0.69)"
     },
     "random": {
-        title: "Random Fun Facts",
+        title: "Random Output",
         subtitle: "",
         content: [
             {
-                type: "highlight",
-                content: "First battery was invented because people were arguing about how to correctly shock frog legs. <br> ~ around 1781 | Volta vs. Galvani on inherent animal electricity fluid"
+                type: "text",
+                content: `
+                <div class="date-item">
+                    <span class="region-link" data-region="random" data-subpage="random.1">Fun Facts</span>
+                    <div class="date-dots"></div>
+                    <span class="date-label">📁</span>
+                </div>
+                `
             },
             {
-                type: "highlight",
-                content: "Placeholder <br> ~ date | context"
+                type: "text",
+                content: `
+                <div class="date-item">
+                    <span class="region-link" data-region="random" data-subpage="random.2">Cheese Is Where The Magic Happens</span>
+                    <div class="date-dots"></div>
+                    <span class="date-label">quantum mechanics rant</span>
+                </div>
+                `
             }
         ],
+        subpages: {
+            "random.1": {
+                title: "Fun Facts",
+                subtitle: "",
+                content: [
+                    {
+                        type: "highlight",
+                        content: "First battery was invented because people were arguing about how to correctly shock frog legs. <br> ~ around 1781 | Volta vs. Galvani on inherent animal electricity fluid"
+                    },
+                    {
+                        type: "highlight",
+                        content: "Placeholder <br> ~ date | context"
+                    }
+                ]
+            },
+            "random.2": {
+                title: "Cheese Is Where The Magic Happens",
+                subtitle: "inspired by MIT spring lectures on quantum mechanics by Prof. Adams",
+                content: [
+                    {
+                        type: "text",
+                        content: `
+                        The best thing about writing an intro to quantum mechanics is that <span class=\"text-bold\">nothing matters</span>. <br>
+                        You avoided physics in highschool? Perfect. 
+                        You don't have an intuition for physics? Even better! <br> <br>
+                        Quantum mechanics is counterintuitive, so not having a newtonian intuition at all actually comes in handy. 
+                        `
+                    },
+                ]
+            }
+        },
         accentColor: "rgba(255, 255, 255, 1)"
     },
     "1": {
         title: "Imagined Speech Recognition",
-        subtitle: "using BCI to achieve telepathy - because, unfortunately, the magical owl never showed up at my doorstep",
+        subtitle: "using electroencephalogram-based BCI to achieve telepathy | because, unfortunately, the magical owl never showed up at my doorstep",
         content: [
             {
                 type: "link",
                 title: "github/enstn/braincomputerinterface",
                 url: "https://github.com/enstn/braincomputerinterface",
-                description: "code documentation",
+                description: "code documentation (still private as of now)",
                 icon: "🐌" // Optional emoji icon
             },
             {
@@ -192,9 +232,9 @@ export const regionContent = {
                 type: "text",
                 content: `
                 <div class="date-item">
-                    <span class="region-link" data-region="1" data-subpage="1.1">subpage embedding test</span>
+                    <span class="region-link" data-region="1" data-subpage="1.1">Muggles' Equivalent of Magical Owl</span>
                     <div class="date-dots"></div>
-                    <span class="date-label">15.11.24</span>
+                    <span class="date-label">introduction</span>
                 </div>
                 `
             },
@@ -202,27 +242,112 @@ export const regionContent = {
                 type: "text",
                 content: `
                 <div class="date-item">
-                    <span class="region-link" data-region="1" data-subpage="1.2">project setup & grand overview</span>
+                    <span class="region-link" data-region="1" data-subpage="1.2">Introduction to Telepathy</span>
                     <div class="date-dots"></div>
-                    <span class="date-label">15.11.24 | 06:01</span>
+                    <span class="date-label">chapter 1</span>
                 </div>
                 `
             }
         ],
         subpages: {
             "1.1": {
-                title: "test subpage embedding",
-                subtitle: "test subtitle",
+                title: "Muggles' Equivalent of Magical Owl",
+                subtitle: "introduction chapter",
                 content: [
                     {
-                        type: "text",
-                        content: "blablabla."
+                        type: "highlight",
+                        content: `
+			            Imagine typing "Hello World". Not with your fingers, but by simply <span class=\"text-highlight\"> <span class=\"text-italic\">imagining the letters.</span> </span> 
+			            `
                     },
+                    {
+                        type: "text",
+                        content: `
+			            Reminds you of Sci-Fi? Or some black magic vodoo written in fantasy? To be honest, I wasn't aware of this possibility too - until a few weeks ago. 
+                        So I invite you to join me, dear reader. This will be our technological crusade against the universe's cruel refusal to gift humanity with magic.
+                        This might be our most promising shot yet for archieving man-made telepathy without touching a scalpel. <br> <br>
+
+			            Let me set the stage before we head straight in. My university mandates students to attend so-called P&S's. Basically, you visit a "lab" 
+				        for one entire semester (most probably a painfully plain classroom). By doing so, the all-mighty education system hopes to bestow hands-on-experience upon our 
+			            little peasant brains. Sure enough, three hours on a random Tuesday afternoon will definitely grant <span class=\"text-italic\">profound</span> insights into the technological 
+			            battlefront spearheaded by generations of homo sapiens. Obviously. Not. You dimwit. <br> <br>
+
+			            Naturally, P&S thus turns into a game of min-maxing credit-efficiency. You have the grand choice between: 
+                        `
+                    },
+                    {
+                        type: "list",
+                        title: "",
+                        items: [
+                            `
+                            invest extra effort with no extra credits to explore spectacular (but exam-irrelevant) concepts
+                            `,
+                            `
+                            choose something vaguely interesting which doesn't suffocate your time so you can safely survive your core courses & exams
+                            `,
+                        ]
+                    },
+                    {
+                        type: "text",
+                        content: `
+                        The true spirit of education demands option one, but who cares about spirits in this day and age anyways? (Besides, maybe, alcoholics.) Like seriously.
+			            What truly matters is passing exams, quickly getting a degree and crunching excell sheets for five decades.
+                        A modern human being shall only exist to maximise shareholders value and only stop once to upload itself into an eternal game of death jockeying.
+                        `
+                    },
+                    {
+                        type: "divider",
+                        style: {
+                            margin: "2rem auto",
+                            height: "2px",
+                            width: "90%",  // Makes it even shorter
+                            color: "rgba(255, 255, 255, 0.2)"
+                        }
+                    },
+                    {
+                        type: "text",
+                        content: `
+                        Jokes aside, I'm no better. Almost all of my previous P&S were selected based on credit-efficiency with a slight interest in the topics covered.
+                        That said, my dear reader, if you were willing to sacrifice your free time and a quite a bit of beauty sleep... and if you were willing to enthusiastically dig deeper into their related 
+                        research field - you'll find amazing professors and PhDs welcoming our combined single-digit IQ.
+                        P&S time-bounds simply don't allow the teachers to go beyond the surface. And most students don't venture beyond the shown surface. I'm guilty as well, I'm trying to change.
+                         <br> <br> 
+                        An extra mail, an extra question after class or extra paper request followed by a response might not be as magical as a talking cat or letter owl, but it sure is mighty.
+                        After all, you just gained a kind-hearted opportunity to learn from the wizards of 21st century. Their mentorship & condensed knowledge will be your weapon to wield against the cold universe.
+                        <br> <br>
+
+                        Which brings us back to our journey into telepathy. On one snowy November night, my screen would light up - dispersing a single mail-preview into the dim room.
+                        `
+                    },
+                    {
+                        type: "highlight",
+                        content: `
+                        21.11.2024 | 21:12 <br> <br>
+                        To: <br>
+                        Subject: Opportunity to Collaborate on Speech Imagery Project <br> 
+                        ... <br>
+                        `
+                    },
+                    {
+                        type: "text",
+                        content: `
+                        And so, dear reader, we begin. Let's imagine letters, wielding the power of 21st-century wizardry, and see just how close we can get to breaking the barriers between mind and machine!
+                        `
+                    },
+                    {
+                        type: "divider"
+                    },
+                    {
+                        type: "text",
+                        content: `
+                        -> <span class=\"region-link\" data-region=\"1\" data-subpage=\"1.2\">[Chapter One: Introduction To Telepathy]</span>
+                        `
+                    }
                 ]
             },
             "1.2": {
-                title: "project setup & overview",
-                subtitle: "test subtitle",
+                title: "Introduction to Telepathy",
+                subtitle: "chapter 1",
                 content: [
                     {
                         type: "text",
@@ -234,8 +359,8 @@ export const regionContent = {
         accentColor: "rgba(255, 255, 255, 1)"
     },
     "2": {
-        title: "Part One: Training Simulated Neurons",
-        subtitle: "",
+        title: "Neuropong",
+        subtitle: "training simulated neurons to play pong",
         content: [
             {
                 type: "link",
@@ -296,7 +421,7 @@ export const regionContent = {
         title: "Part Two: Training Biological Neurons",
         subtitle: "imaging pong as your meaning of life",
         content: [
-            
+
         ],
         accentColor: "rgba(255, 0, 0, 0.6)"
     },
