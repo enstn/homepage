@@ -1,0 +1,33 @@
+Frontend is dead. This website is an example for it. <br> <br>
+
+Look, do you have internet? Do you have an okay-ish LLM like ChatGPT at hand? Can you think? Good, that's it. You don't need more. 
+God created the universe in six days; in the meantime, ClaudeAI created the website frontend you're looking at right now. <br> <br>
+
+A week ago, I had no idea of HTML or javascript. Today, I still have no idea of HTML. This is a hyperbole, sure, but you get the gist. Knowing code syntax
+and having some coding experience significantly sped up my workflow and made bug fixing & feature implementation easy for me. I'm not going to deny it.
+Still, the fact remains: I could have done it nonetheless without any prior coding knowledge. <br> <br>
+
+The only time actual computations were required on my side was when I had to think about the ui logic or some error handling.
+Nothing you can't do as well. Oh yeah, and a few sketches on how the website should look like would help as well. After that it's smooth sailing. 
+Here is a step-by-step: <br> <br>
+
+1) create a github account and a git repo to store your code & host your website on github pages <br> <br> 
+2) pick a LLM of your choice and prompt your intended logic behaviour of your website <br> <br>
+3) review the code it spits out (just let the LLM or some indian ytber explain) <br> <br>
+4) copy paste the part that seems good enough into your git repo (if you don't know, all in and hope for the best) <br> <br>
+5) deploy and check if it works as intented <br> <br>
+6) rinse and repeat step 2 to 5 <br> <br>
+
+Congrats. You have now created a website. It's that easy.
+
+
+Well, almost. There are quite a few times when the LLM gets stuck, and you have to remind them of coding concepts that might help. 
+Additionally, they tend to return quite average-performing and case-specific code, so you'll have to rewrite a lot if you want to keep the code clean and somewhat general for future extensions. <br> <br>
+
+I guess this is where it gets difficult for complete non-coders, but just go to Reddit tbh. The probability that some other random guy
+already had the same idea and issue as you is almost certain. You'll find a solution. And if not - learning a little bit of coding is not too bad in the 21st century, if you ask me.
+<br> <br>
+
+Better yet, if you don't care about performance, this is all you need. Follow the steps above and publish your website onto github pages. Thats it. Now get building.
+
+<br> <br> 

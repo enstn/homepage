@@ -189,6 +189,16 @@ export const regionContent = {
                     <span class="date-label">quantum mechanics rant</span>
                 </div>
                 `
+            },
+            {
+                type: "text",
+                content: `
+                <div class="date-item">
+                    <span class="region-link" data-region="random" data-subpage="random.3">Website-Building for Dummies</span>
+                    <div class="date-dots"></div>
+                    <span class="date-label">difficulty: 2/10</span>
+                </div>
+                `
             }
         ],
         subpages: {
@@ -218,6 +228,21 @@ export const regionContent = {
                         You don't have an intuition for physics? Even better! <br> <br>
                         Quantum mechanics is counterintuitive, so not having a newtonian intuition at all actually comes in handy. 
                         `
+                    },
+                ]
+            },
+            "random.3": {
+                title: "Website-Building for Dummies",
+                subtitle: "how you can create sth like this without any prior coding knowledge",
+                accentColor:"rbga(225, 0, 0, 1)",
+                content: [
+                    {
+                        type: "text",
+                        textFile: "content/website/website1"
+                    },
+                    {
+                        type: "highlight",
+                        content: "Huge shoutout to Francesco Michlini for providing an awesome brain.glb model & a free javascript tutorial on 3d rendering."
                     },
                 ]
             }
