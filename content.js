@@ -149,7 +149,8 @@ export const regionContent = {
             {
                 type: "text",
                 content: `
-                Huge shoutout to Francesco Michlini for providing a free brain.glb model and a 3D rendering tutorial. <br> <br>
+                Huge shoutout to Francesco Michlini for providing a free brain.glb model and a 3D rendering tutorial. 
+                If you experience website issues, check the <span class=\"region-link\" data-region=\"info\" data-subpage=\"info.1\">version control</span>. <br> <br>
                 Don't scroll down to the end. This is a blatant scroll bait.
                 `
             },
@@ -163,6 +164,19 @@ export const regionContent = {
                 alt: "why you scrolling so far"
             }
         ],
+        subpages: {
+            "info.1": {
+                title: "",
+                subtitle: "",
+                content: [
+                    {
+                        type: "image",
+                        src: "./images/version_control.png",
+                        alt: "version control github"
+                    },
+                ]
+            },
+        },
         accentColor: "rgba(255, 0, 0, 0.69)"
     },
     "random": {

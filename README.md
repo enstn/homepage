@@ -4,9 +4,10 @@
 > - reload the page by clicking on the title
 > - or running following devTool function in your browser console:
 > ```
-> devTools.clearYourMomsCookies()
+> checkVersion()
 > ```
-> The website will automatically update outdated versions after that.
+> The website will automatically update outdated versions after that. The current version does not support mobile integration, 
+> it's purely written for desktop.
 
 # general info
 This is code for my [ETH website](https://n.ethz.ch/~lejiang/). The latest working version is 1.0.1. 
