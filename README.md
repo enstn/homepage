@@ -1,15 +1,18 @@
+> [!WARNING]
+> Version-based cookie & cache reset was introduced on the 24th of Novermber 2024 at 18:57 CET.
+> Please reload the site or use the following devTool.function() if you have visited before
+> this time to ensure you have the latest working instance.
+> 
+> ```
+> devTools.clearYourMomsCookies()
+> ```
+
 # general info
-This is code for my [ETH website](https://n.ethz.ch/~lejiang/). 
+This is code for my [ETH website](https://n.ethz.ch/~lejiang/). The latest working version is 1.0.1. 
 
-Version-based cookie & cache reset was introduced on the 24th of Novermber 2024 at 18:57 CET.
-Please reload the site or use the following devTool.function() if you have visited before
-this time to ensure you have the latest working instance.
-
-```
-devTools.clearYourMomsCookies()
-```
 
 # version control
+You can check your version by reloading the page & reading the console output. The website automatically updates outdated versions if you click the title.
 
 ## 1.0.1
 - added version-based cache-control
@@ -20,7 +23,3 @@ devTools.clearYourMomsCookies()
 - [ ] very simple project progress time-line
 - [ ] a lil local chatbot to lower performance even more pahahah 
 - [ ] brain game
-
-
-> [!WARNING]
-> Website still under development, so there are frequent updates which might lead to cookie / cache conflicts since your last visit.  

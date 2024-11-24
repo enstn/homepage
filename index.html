@@ -113,7 +113,7 @@
 
     <!-- version-based cache control -->
     <script>
-        const SITE_VERSION = '1.0.1';  // change when updating
+        const SITE_VERSION = '1.0.0';  // change when updating
         
         function checkVersion() {
             const savedVersion = localStorage.getItem('siteVersion');
@@ -128,16 +128,18 @@
                         keys.forEach(key => caches.delete(key));
                     });
                 }
+                console.log('Caches cleared.');
                 
                 // Clear localStorage except the version
-                const version = localStorage.getItem('siteVersion');
+                const old_version = localStorage.getItem('siteVersion');
                 localStorage.clear();
                 localStorage.setItem('siteVersion', SITE_VERSION);
+                console.log('Local storage cleared');
                 
-                // Force reload if versions don't match
-                if (savedVersion && savedVersion !== SITE_VERSION) {
-                    window.location.reload(true);
-                }
+                console.log('Updated from old version', old_version);
+                console.log('to new version:', SITE_VERSION);
+            } else {
+                console.log('Your version is up-to-date:', SITE_VERSION);
             }
         }
         

@@ -137,8 +137,8 @@ export const devTools = {
                 keys.forEach(key => caches.delete(key));
             });
         }
-        
-        return 'Site data cleared. Refresh the page to see changes.';
+
+        console.log('Cookies & caches cleared successfully.')
     }
 };
 
