@@ -1,5 +1,5 @@
 // ui.js
-import { regionContent} from './content.js';
+import {regionContent, loadTextContent} from './content.js';
 window.showRegionDetails = showRegionDetails;
 
 export function setupMagneticLegend() {
@@ -148,12 +148,20 @@ export const devTools = {
 };
 
 // region content stuff
-function showRegionDetails(region, subpage = null) {
+async function showRegionDetails(region, subpage = null) {
     const infoPanel = document.getElementById('info-panel');
     const detailsContainer = document.getElementById('region-details');
-    const mainContent = regionContent[region];
+    detailsContainer.classList.add('changing');
 
+    const mainContent = regionContent[region];
     const content = subpage ? mainContent.subpages[subpage] : mainContent;
+
+    // Load all text content first
+    for (const item of content.content) {
+        if (item.type === 'text' && item.textFile) {
+            item.content = await loadTextContent(item.textFile);
+        }
+    }
     
     let accentColor;
     if (subpage) {

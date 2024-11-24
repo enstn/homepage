@@ -103,6 +103,16 @@ title: "Imagined Speech Recognition",
         },
         accentColor: "rgba(255, 255, 255, 1)"
 */
+export async function loadTextContent(filename) {
+    try {
+        const response = await fetch(`/~lejiang/${filename}.txt`);
+        if (!response.ok) throw new Error(`Failed to load ${filename}`);
+        return await response.text();
+    } catch (error) {
+        console.error(`Error loading ${filename}:`, error);
+        return 'Content loading failed.';
+    }
+}
 
 export const regionContent = {
     "info": {
@@ -337,6 +347,10 @@ export const regionContent = {
                         content: `
                         And so, dear reader, we begin. Let's imagine letters, wielding the power of 21st-century wizardry, and see just how close we can get to breaking the barriers between mind and machine.
                         `
+                    },
+                    {
+                        type: "text",
+                        textFile: "content/telepathy/intro/test"
                     },
                     {
                         type: "divider"
