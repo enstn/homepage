@@ -301,7 +301,7 @@ export const regionContent = {
                 type: "link",
                 title: "github/enstn/braincomputerinterface",
                 url: "https://github.com/enstn/braincomputerinterface",
-                description: "code documentation (still private as of now)",
+                description: "code documentation",
                 icon: "🐌" // Optional emoji icon
             },
             {
@@ -405,8 +405,8 @@ export const regionContent = {
                         type: "highlight",
                         content: `
                         21.11.2024 | 21:12 <br> <br>
-                        From: P&S Teacher <br>
-                        To: Us <br>
+                        From: <br>
+                        To: <br>
                         Subject: Opportunity to Collaborate on Speech Imagery Project <br> 
                         ... <br>
                         `
@@ -416,10 +416,6 @@ export const regionContent = {
                         content: `
                         And so, dear reader, we begin. Let's imagine letters, wielding the power of 21st-century wizardry, and see just how close we can get to breaking the barriers between mind and machine.
                         `
-                    },
-                    {
-                        type: "text",
-                        textFile: "content/telepathy/intro/test"
                     },
                     {
                         type: "divider"
