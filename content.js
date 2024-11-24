@@ -167,13 +167,28 @@ export const regionContent = {
         subpages: {
             "info.1": {
                 title: "",
+                accentColor: "rgba(255, 0, 0, 0.69)",
                 subtitle: "",
                 content: [
                     {
-                        type: "image",
-                        src: "./images/version_control.png",
-                        alt: "version control github"
+                        type: "highlight",
+                        content: `
+                        <span class=\"text-highlight\">The current version does not support mobile integration and is purely written for desktop application.</span> <br> <br>
+
+                        Version-based cookie & cache reset was introduced on the  <span class=\"text-italic\">24th of November 2024 at 18:57 CET</span>.
+                        Please update the site if you have visited before this date of time by either: <br> <br>
+                        - reload the page by clicking on the title <br> <br>
+                        - or running following custom function in your browser console: checkVersion() <br> <br> 
+                        This will automatically update your version if it is outdated. The latest working instance is: version 1.0.1
+                        `
                     },
+                    {
+                        type: "divider"
+                    },
+                    {
+                        type: "text",
+                        textFile: "content/vc/vc1"
+                    }
                 ]
             },
         },
