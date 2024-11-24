@@ -9,18 +9,17 @@ this time to ensure you have the latest working instance.
 devTools.clearYourMomsCookies()
 ```
 
-## ToDo
-- [ ] very simple project progress time-line
-- [ ] a lil local chatbot to lower performance even more pahahah 
-
-## BugsToFix
-
 # version control
 
 ## 1.0.1
 - added version-based cache-control
 - introduced .txt file based content embedding with a js handler
 - fixed colour differences across safari & firefox browsers
+
+## upcoming
+- [ ] very simple project progress time-line
+- [ ] a lil local chatbot to lower performance even more pahahah 
+- [ ] brain game
 
 
 > [!WARNING]
