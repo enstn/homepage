@@ -133,7 +133,7 @@ export const regionContent = {
                 items: [
                     "5th semester electrical engineering student at ETH Zurich",
                     "massive curiosity crush on the topics mentioned above",
-                    "eternal yapping regarding the topics, this website partially exists to grant my family peace",
+                    "eternal yapper, this website partially exists to grant my family peace",
                     "currently developing telepathy; here's the <span class=\"region-link\" data-region=\"1\" data-subpage=\"1.1\">intro</span> if you're interested",
                 ]
             },
@@ -142,17 +142,14 @@ export const regionContent = {
                 content: "To explore the website, just hover over the boxes on your left or click on the links above :)"
             },
             {
-                type: "divider",
-                style: {
-                    margin: "2rem auto",
-                    height: "2px",
-                    width: "100%",  // Makes it even shorter
-                    color: "rgba(255, 255, 255, 0.1)"
-                }
+                type: "divider"
             },
             {
                 type: "text",
-                content: "Don't scroll down to the end. This is blatant scroll bait."
+                content: `
+                Huge shoutout to Francesco Michlini for providing a free brain.glb model and a 3D rendering tutorial. <br> <br>
+                Don't scroll down to the end. This is a blatant scroll bait.
+                `
             },
             {
                 type: "text",
@@ -196,7 +193,7 @@ export const regionContent = {
                 <div class="date-item">
                     <span class="region-link" data-region="random" data-subpage="random.3">Website-Building for Dummies</span>
                     <div class="date-dots"></div>
-                    <span class="date-label">difficulty: 2/10</span>
+                    <span class="date-label">web-frontend rant</span>
                 </div>
                 `
             }
@@ -233,8 +230,8 @@ export const regionContent = {
             },
             "random.3": {
                 title: "Website-Building for Dummies",
-                subtitle: "how you can create sth like this without any prior coding knowledge",
-                accentColor:"rbga(225, 0, 0, 1)",
+                subtitle: "",
+                accentColor: "rgba(225, 225, 225, 1)",
                 content: [
                     {
                         type: "text",
@@ -242,8 +239,24 @@ export const regionContent = {
                     },
                     {
                         type: "highlight",
-                        content: "Huge shoutout to Francesco Michlini for providing an awesome brain.glb model & a free javascript tutorial on 3d rendering."
+                        content: `
+                        1) create a github account and a git repo to store your code & host your website on github pages <br> <br> 
+                        2) pick a LLM of your choice and prompt your intended behaviour of your website. Start with fundamental UI logic first before getting to the design 
+                        -> (like mouse state detection, embedding content and linking between pages, close / open page buttons etc.) <br> <br>
+                        3) review the code it spits out (just let the LLM or some indian ytber explain) <br> <br>
+                        4) copy paste the part that seems good enough into your git repo (if you don't know, all in and hope for the best) <br> <br>
+                        5) deploy and check if it works as intented <br> <br>
+                        6) if yes: rinse and repeat step 2 to 5  <br>
+                        -> if not: debug by feeding the error back into the LLM or go on stackoverflow / reddit, repeat until it works
+                        `
                     },
+                    {
+                        type: "text",
+                        textFile: "content/website/website2"
+                    },
+                    {
+                        type: "divider"
+                    }
                 ]
             }
         },
@@ -461,8 +474,8 @@ export const regionContent = {
         accentColor: "rgba(255, 255, 255, 1)"
     },
     "3": {
-        title: "Part Two: Training Biological Neurons",
-        subtitle: "imaging pong as your meaning of life",
+        title: "Neurobiology",
+        subtitle: "abusing feynman-technique for my self-study journey",
         content: [
 
         ],

@@ -209,7 +209,7 @@ export class BrainVisualization {
             this.intersects = this.raycaster.intersectObject(this.brain);
             
             if (this.intersects.length > 0) {
-                showRegionDetails('info');
+                showRegionDetails('3');
             }
         });
     }

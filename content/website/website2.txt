@@ -1,0 +1,11 @@
+Congrats. You have now created a website. It's that easy.
+
+Well, almost. There are quite a few times when the LLM might get stuck, and you have to bias your prompt towards specific coding concepts you know would solve the problem. 
+The quality of code therefore directly corresponds to the depth of your own knowledge base. Additionally, LLMs tend to return quite average-performing and prompt-specific code, 
+so you'll have to rewrite a lot if you want to keep the codebase clean and somewhat general for future extensions. <br> <br>
+
+I guess this is where it could get difficult for complete non-coders... Reddit / Stackoverflow are generally your best shots here. The probability that some random guy
+already had the same idea and issue as you is almost certain. You'll find a solution. And if not - a tiny bit of code literacy isn't too bad to possess for the 21st century, if you ask me.
+<br> <br>
+
+Of course, if you don't care about optimal performance & clean code, prompting will suffice. Follow the steps above and publish your website onto github pages. That's it. Now go build something 🐌
