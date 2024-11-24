@@ -11,14 +11,12 @@
 # general info
 This is code for my [ETH website](https://n.ethz.ch/~lejiang/). The latest working version is 1.0.1. 
 
-# version control
-
 ## 1.0.1
 - added version-based cache-control
 - introduced .txt file based content embedding with a js handler
 - fixed colour differences across safari & firefox browsers
 
-## upcoming
+## ToDo
 - [ ] very simple project progress time-line
 - [ ] a lil local chatbot to lower performance even more pahahah 
 - [ ] brain game
