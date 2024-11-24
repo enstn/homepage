@@ -111,6 +111,41 @@
     <!-- GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
+    <!-- version-based cache control -->
+    <script>
+        const SITE_VERSION = '1.0.1';  // change when updating
+        
+        function checkVersion() {
+            const savedVersion = localStorage.getItem('siteVersion');
+            
+            // If version is different or doesn't exist
+            if (savedVersion !== SITE_VERSION) {
+                console.log('New version detected:', SITE_VERSION);
+                
+                // Clear old caches
+                if ('caches' in window) {
+                    caches.keys().then(keys => {
+                        keys.forEach(key => caches.delete(key));
+                    });
+                }
+                
+                // Clear localStorage except the version
+                const version = localStorage.getItem('siteVersion');
+                localStorage.clear();
+                localStorage.setItem('siteVersion', SITE_VERSION);
+                
+                // Force reload if versions don't match
+                if (savedVersion && savedVersion !== SITE_VERSION) {
+                    window.location.reload(true);
+                }
+            }
+        }
+        
+    // Run check when page loads
+    checkVersion();
+    </script>
+
+
     <!-- Main Script -->
     <script type="module">
         import { BrainVisualization } from './brain.js';

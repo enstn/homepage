@@ -5,7 +5,7 @@ The quality of code therefore directly corresponds to the depth of your own know
 so you'll have to rewrite a lot if you want to keep the codebase clean and somewhat general for future extensions. <br> <br>
 
 I guess this is where it could get difficult for complete non-coders... Reddit / Stackoverflow are generally your best shots here. The probability that some random guy
-already had the same idea and issue as you is almost certain. You'll find a solution. And if not - a tiny bit of code literacy isn't too bad to possess for the 21st century, if you ask me.
+already had the same idea and issue as you is almost certain. You'll find a solution. And if not - a tiny bit of code literacy isn't too bad to possess nowadays, if you ask me.
 <br> <br>
 
-Of course, if you don't care about optimal performance & clean code, prompting will suffice. Follow the steps above and publish your website onto github pages. That's it. Now go build something 🐌
+Of course, if you don't care about optimal performance or clean code, prompting will suffice. Follow the steps above and publish your website onto github pages. That's it. Now go build something 🐌

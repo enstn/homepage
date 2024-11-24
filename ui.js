@@ -131,16 +131,11 @@ export const devTools = {
             document.cookie = c.trim().split("=")[0] + "=;" + "expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         });
         
-        localStorage.clear();
-        sessionStorage.clear();
-        
+        // Clear old caches
         if ('caches' in window) {
-            caches.keys().then(names => {
-                names.forEach(name => {
-                    caches.delete(name);
-                });
+            caches.keys().then(keys => {
+                keys.forEach(key => caches.delete(key));
             });
-            console.log('Cookies data cleared successfully!');
         }
         
         return 'Site data cleared. Refresh the page to see changes.';

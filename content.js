@@ -121,20 +121,22 @@ export const regionContent = {
         content: [
             {
                 type: "highlight",
-                content: "This website documents my discovery progress and <span class=\"region-link\" data-region=\"booklist\">readings</span> reagarding: <br> ->  <span class=\"text-bold\">consciousness</span>,<span class=\"text-bold\">machine learning</span>, <span class=\"text-bold\">neurobiology</span> & <span class=\"text-bold\">neuromorphic engineering</span>"
+                content: `
+                This website documents my discovery progress and <span class=\"region-link\" data-region=\"booklist\">readings</span> regarding: <br> 
+                ->  <span class=\"text-bold\">consciousness</span>, <span class=\"text-bold\">artificial intelligence</span> & <span class=\"text-bold\">neurobiology</span> 
+            `
             },
             {
                 type: "text",
-                content: "... and some other <span class=\"region-link\" data-region=\"random\">random stuff</span> to further increase entropy."
+                content: "... and some other <span class=\"region-link\" data-region=\"random\">random stuff</span> to further increase entropy. This website partially exists to grant my family peace from my eternal yapping."
             },
             {
                 type: "list",
                 title: "Few Things About Me",
                 items: [
-                    "5th semester electrical engineering student at ETH Zurich",
+                    "electrical engineering student at ETH Zurich",
                     "massive curiosity crush on the topics mentioned above",
-                    "eternal yapper, this website partially exists to grant my family peace",
-                    "currently developing telepathy; here's the <span class=\"region-link\" data-region=\"1\" data-subpage=\"1.1\">intro</span> if you're interested",
+                    "currently working on telepathy; here's the <span class=\"region-link\" data-region=\"1\" data-subpage=\"1.1\">intro</span> if you're interested",
                 ]
             },
             {

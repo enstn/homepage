@@ -11,7 +11,7 @@ Debugging & feature implementation is 100% easier for someone who is familiar wi
 Still, the fact remains: you could code this website without any prior coding knowledge. <br> <br>
 
 How did I arrive at this conclusion? Well, in hindsight of my own website developement, the majority of my mental effort was poured into UI logic, page setup & all sorts of error handling while
-the majority of time was wasted on formatting the frontend styling. Given how advanced LLMs nowadays are, you can easily off-load both the logic implementation and the 
+the majority of time was wasted on formatting the frontend styling across different browsers. Given how advanced LLMs nowadays are, you can easily off-load both the logic implementation and the 
 design realization. Especially the later part is something I witnessed myself.
 
 <br> <br>
