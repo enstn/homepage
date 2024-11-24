@@ -184,6 +184,16 @@ export class BrainVisualization {
     _addListeners() {
         window.addEventListener('resize', () => this._onResize());
         window.addEventListener('mousemove', (e) => this._onMousemove(e));
+        
+        // check mouseclick with raycaster to open site info
+        this.container.addEventListener('click', (e) => {
+            this.raycaster.setFromCamera(this.mouse, this.camera);
+            this.intersects = this.raycaster.intersectObject(this.brain);
+            
+            if (this.intersects.length > 0) {
+                showRegionDetails('info');
+            }
+        });
     }
 
     setupInfoPanelListener() {

@@ -62,7 +62,9 @@ export function setupUIInteractions() {
     const legendItems = document.querySelectorAll('.legend-item');
     const infoPanel = document.getElementById('info-panel');
     const closeButton = document.getElementById('close-info-panel');
+    const siteInfo = document.getElementById('site-info');
 
+    // legend showcase logic
     legendItems.forEach(item => {
         item.addEventListener('click', () => {
             const region = item.dataset.region;
@@ -75,6 +77,15 @@ export function setupUIInteractions() {
         });
     });
 
+    // site info showcase 
+    siteInfo.addEventListener('click',() => {
+        legendItems.forEach(item => {
+            item.classList.remove('active');
+        });
+        showRegionDetails('info');
+    });
+
+    // close with click
     if (closeButton && infoPanel) {
         closeButton.addEventListener('click', () => {
             console.log('Close button clicked');
@@ -83,8 +94,20 @@ export function setupUIInteractions() {
         });
     }
 
+    // close with esc
+    if (infoPanel) {
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const infoPanel = document.getElementById('info-panel');
+                infoPanel.classList.remove('active');
+                document.querySelectorAll('.legend-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+            }
+        });
+    }
+
     setupTitleRefresh();
-    setupInfo();
     setupMagneticLegend();
 }
 
@@ -96,16 +119,7 @@ function setupTitleRefresh() {
             e.preventDefault();
             e.stopPropagation();
             window.location.reload();
-        });
-    }
-}
-
-function setupInfo() {
-    const siteInfo = document.getElementById('site-info');
-
-    if (siteInfo) {
-        siteInfo.addEventListener('click',(e) => {
-                showRegionDetails('info');
+            devTools.clearYourMomsCookies();
         });
     }
 }
@@ -126,9 +140,9 @@ export const devTools = {
                     caches.delete(name);
                 });
             });
+            console.log('Cookies data cleared successfully!');
         }
         
-        console.log('Cookies data cleared successfully!');
         return 'Site data cleared. Refresh the page to see changes.';
     }
 };
@@ -140,6 +154,24 @@ function showRegionDetails(region, subpage = null) {
     const mainContent = regionContent[region];
 
     const content = subpage ? mainContent.subpages[subpage] : mainContent;
+    
+    let accentColor;
+    if (subpage) {
+        // Use subpage accent color if it exists, otherwise fall back to main region's accent color
+        accentColor = content.accentColor || mainContent.accentColor;
+    } else {
+        accentColor = mainContent.accentColor;
+    }
+
+    // opening legend items when clicking on subpage links
+    const legendItems = document.querySelectorAll('.legend-item');
+    legendItems.forEach(item => {
+        if (item.dataset.region === region) {
+            item.classList.add('active');
+        } else {
+            item.classList.remove('active');
+        }
+    });
 
     if (!content) {
         console.error(`No content found for ${subpage ? 'subpage' : 'region'}: ${subpage || region}`);

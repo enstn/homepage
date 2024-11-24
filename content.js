@@ -111,7 +111,7 @@ export const regionContent = {
         content: [
             {
                 type: "highlight",
-                content: "This website documents my discovery progress and <span class=\"region-link\" data-region=\"booklist\">readings</span> reagarding: <br> ->  <span class=\"text-highlight-bold\">consciousness</span>,<span class=\"text-highlight-bold\">machine learning</span>, <span class=\"text-highlight-bold\">neurobiology</span> & <span class=\"text-highlight-bold\">neuromorphic engineering</span>"
+                content: "This website documents my discovery progress and <span class=\"region-link\" data-region=\"booklist\">readings</span> reagarding: <br> ->  <span class=\"text-bold\">consciousness</span>,<span class=\"text-bold\">machine learning</span>, <span class=\"text-bold\">neurobiology</span> & <span class=\"text-bold\">neuromorphic engineering</span>"
             },
             {
                 type: "text",
@@ -216,7 +216,7 @@ export const regionContent = {
     },
     "1": {
         title: "Imagined Speech Recognition",
-        subtitle: "using electroencephalogram-based BCI to achieve telepathy | because, unfortunately, the magical owl never showed up at my doorstep",
+        subtitle: "using electroencephalogram-based BCI to achieve telepathy | because, unfortunately, Hogwarts' letter never arrived",
         content: [
             {
                 type: "link",
@@ -232,7 +232,7 @@ export const regionContent = {
                 type: "text",
                 content: `
                 <div class="date-item">
-                    <span class="region-link" data-region="1" data-subpage="1.1">Muggles' Equivalent of Magical Owl</span>
+                    <span class="region-link" data-region="1" data-subpage="1.1">Muggles' Equivalent of Magic</span>
                     <div class="date-dots"></div>
                     <span class="date-label">introduction</span>
                 </div>
@@ -251,28 +251,32 @@ export const regionContent = {
         ],
         subpages: {
             "1.1": {
-                title: "Muggles' Equivalent of Magical Owl",
+                title: "Muggles' Equivalent of Magic",
                 subtitle: "introduction chapter",
+                accentColor: "rgba(225, 225, 225, 1)",
                 content: [
                     {
                         type: "highlight",
                         content: `
-			            Imagine typing "Hello World". Not with your fingers, but by simply <span class=\"text-highlight\"> <span class=\"text-italic\">imagining the letters.</span> </span> 
+			            Imagine typing "Hello World". Not with your fingers, but by simply <span class=\"text-italic\"> imagining </span>  the letters. 
 			            `
                     },
                     {
                         type: "text",
                         content: `
-			            Reminds you of Sci-Fi? Or some black magic vodoo written in fantasy? To be honest, I too wasn't aware of this possibility... until a few weeks ago. 
-                        So, dear reader, I invite you to join me. This will be our technological crusade against the universe's cruel refusal to gift humanity with magic.
-                        For this might be our most promising shot yet for archieving man-made telepathy without touching a scalpel. <br> <br>
+			            Does this sound like science fiction? Or some black magic vodoo written in fantasy? To be honest, I too wasn't aware of this possibility... until a few weeks ago. 
+                        So, dear reader, I invite you to join me. <br> <br>
+                        
+                        This will be our technological crusade against the universe's cruel refusal to gift humanity with magic.
+                        For this might be our most promising shot yet towards archieving man-made telepathy without touching a wand. <br> <br>
 
-			            Let me set the stage before we head straight in. My university mandates students to attend so-called P&S's. Basically, you visit a "lab" 
-				        for one entire semester (most probably a painfully plain classroom). By doing so, the all-mighty education system hopes to bestow hands-on-experience upon our 
-			            little peasant brains. Sure enough, three hours on a random Tuesday afternoon will definitely grant <span class=\"text-italic\">profound</span> insights into the technological 
-			            landscape molded by homo sapiens. Obviously not. Dimwit. <br> <br>
+			            Let me set the stage before we head straight in. My university mandates students to attend so-called P&S's (Praktikum & Seminare). By doing so, the all-mighty education system hopes to bestow hands-on-experience upon our 
+			            little peasant brains. Yeah, <span class=\"text-italic\">right</span>. Sitting around for three hours on a random Tuesday afternoon will <span class=\"text-italic\">surely</span> give us profound insights into the technological 
+			            landscape molded by homo sapiens. <br> <br> Obviously not. Dimwit. <br> <br>
 
-			            Naturally, P&S thus turns into a game of min-maxing credit-efficiency. You have the grand choice between the following: 
+                        Most P&S time-bounds simply don't allow the teachers to go beyond the surface. And most students don't venture beyond the shown surface. <br> <br>
+
+			            Therefore, P&S naturally turns into a game of min-maxing credit-efficiency. You have the grand choice between the following: 
                         `
                     },
                     {
@@ -290,9 +294,9 @@ export const regionContent = {
                     {
                         type: "text",
                         content: `
-                        The true spirit of education demands option one, but who cares about spirits in this day and age anyways? (Besides, maybe, alcoholics.) Like seriously.
-			            What truly matters is option too: passing exams, quickly getting a degree and crunching excell sheets for five decades.
-                        A modern human being shall exist exclusively to maximise shareholders value and stop only once to upload itself into an eternal game of death jockeying.
+                        The true <span class=\"text-italic\">spirit of education</span> demands option one, but who cares about spirits in this day and age anyways? (Besides, maybe, alcoholics.) Like seriously.
+			            What truly matters is option two: passing exams, quickly getting a degree and crunching numbers in excell sheets for five decades. <br> 
+                        A modern human shall exist exclusively to maximise shareholders value and stop only once to upload itself into an eternal game of death jockeying.
                         `
                     },
                     {
@@ -308,22 +312,22 @@ export const regionContent = {
                         type: "text",
                         content: `
                         Jokes aside, I'm no better. Almost all of my previous P&S were selected based on credit-efficiency with a slight interest in the covered topics.
-                        That being said, if you were willing to sacrifice your free time & quite a bit of beauty sleep, and if you were willing to dig deeper into P&S related 
+                        That being said, if you were willing to sacrifice your free time & quite a bit of beauty sleep, and if you were willing to voluntarily dig deeper into P&S related 
                         research fields - you'll find amazing professors and PhDs welcoming our combined single-digit IQ.
-                        P&S time-bounds simply don't allow the teachers to go beyond the surface. And most students don't venture beyond the shown surface. I'm guilty as well so I'm trying to change.
+                        
                          <br> <br> 
-                        An extra mail, an extra question after class or extra paper request followed by a response might not be as magical as a talking cat or letter owl, but it sure is mighty.
-                        After all, you just gained a kind-hearted opportunity to learn from the wizards of the 21st century. Their mentorship & condensed knowledge will be your weapon to wield against the universe.
-                        <br> <br>
+                        Some late-night research, an extra question after class or even paper request followed by a teacher's response is not nearly as magical as a letter from Hogwarts, but it sure is mighty.
+                        After all, you just gained a kind-hearted opportunity to learn from the wizards of the 21st century. Why wield wooden sticks if you can wield science? <br> <br> 
 
-                        Which brings us back to our journey into telepathy, started with a single mail:
+                        Which brings us back to our journey into telepathy, started by a single mail:
                         `
                     },
                     {
                         type: "highlight",
                         content: `
                         21.11.2024 | 21:12 <br> <br>
-                        To: <br>
+                        From: P&S Teacher <br>
+                        To: Us <br>
                         Subject: Opportunity to Collaborate on Speech Imagery Project <br> 
                         ... <br>
                         `
