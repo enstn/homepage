@@ -174,8 +174,8 @@ export const regionContent = {
         ],
         subpages: {
             "info.1": {
-                title: "",
-                accentColor: "rgba(255, 0, 0, 0.69)",
+                title: "Version Control",
+                accentColor: "rgba(255, 225, 225, 1)",
                 subtitle: "",
                 content: [
                     {
@@ -197,7 +197,7 @@ export const regionContent = {
             },
             "info.2": {
                 title: "Hotkeys",
-                accentColor: "rgba(255, 0, 0, 0.69)",
+                accentColor: "rgba(255, 225, 225, 1)",
                 subtitle: "not vim-styled, sorry F.K.",
                 content: [
                     {
