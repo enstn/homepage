@@ -1,5 +1,5 @@
-VERSION 1.0.1 <br> <br>
+<span class="text-highlight-bold">VERSION 1.0.1</span> <br> <br>
 
 - added version-based cache-control <br>
-- introduced .txt file based content embedding with a js handler <br>
-- fixed colour differences across safari & firefox browsers <br>
+- introduced .txt file based dynamic content loader <br>
+- fixed colour gradient & opacity differences across safari & firefox browsers <br>

@@ -1,0 +1,5 @@
+<span class="text-highlight-bold">BETA VERSION 1.0.2 </span> <br> <br>
+
+- still in testing phase, if your browser runs this version please refresh <br>
+- test brain.game instance <br>
+- content migration into txt-based embedding introduced in 1.0.1 <br>

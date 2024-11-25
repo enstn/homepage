@@ -8,4 +8,4 @@ I guess this is where it could get difficult for complete non-coders... Reddit /
 already had the same idea and issue as you is almost certain. You'll find a solution. And if not - a tiny bit of code literacy isn't too bad to possess nowadays, if you ask me.
 <br> <br>
 
-Of course, if you don't care about optimal performance or clean code, prompting will suffice. Follow the steps above and publish your website onto github pages. That's it. Now go build something 🐌
+Of course, if you don't care about optimal performance or readable code, prompting will suffice. Follow the steps above and publish your website onto github pages. That's it. Now go build something 🐌

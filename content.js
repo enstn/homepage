@@ -149,7 +149,7 @@ export const regionContent = {
             {
                 type: "text",
                 content: `
-                Huge shoutout to Francesco Michlini for providing a free brain.glb model and a 3D rendering tutorial. 
+                Huge shoutout to Francesco Michlini for providing a free brain.glb model and a 3D rendering tutorial. <br>
                 If you experience website issues, check the <span class=\"region-link\" data-region=\"info\" data-subpage=\"info.1\">version control</span>. <br> <br>
                 Don't scroll down to the end. This is a blatant scroll bait.
                 `
@@ -171,24 +171,20 @@ export const regionContent = {
                 subtitle: "",
                 content: [
                     {
-                        type: "highlight",
-                        content: `
-                        <span class=\"text-highlight\">The current version does not support mobile integration and is purely written for desktop application.</span> <br> <br>
-
-                        Version-based cookie & cache reset was introduced on the  <span class=\"text-italic\">24th of November 2024 at 18:57 CET</span>.
-                        Please update the site if you have visited before this date of time by either: <br> <br>
-                        - reload the page by clicking on the title <br> <br>
-                        - or running following custom function in your browser console: checkVersion() <br> <br> 
-                        This will automatically update your version if it is outdated. The latest working instance is: version 1.0.1
-                        `
+                        type: "text",
+                        textFile: "content/vc/vcinfo"
                     },
                     {
                         type: "divider"
                     },
                     {
-                        type: "text",
+                        type: "highlight",
                         textFile: "content/vc/vc1"
-                    }
+                    },
+                    {
+                        type: "highlight",
+                        textFile: "content/vc/vc2"
+                    },
                 ]
             },
         },
@@ -266,24 +262,15 @@ export const regionContent = {
                 content: [
                     {
                         type: "text",
-                        textFile: "content/website/website1"
+                        textFile: "content/rant_frontend/rant_frontend1"
                     },
                     {
                         type: "highlight",
-                        content: `
-                        1) create a github account and a git repo to store your code & host your website on github pages <br> <br> 
-                        2) pick a LLM of your choice and prompt your intended behaviour of your website. Start with fundamental UI logic first before getting to the design 
-                        -> (like mouse state detection, embedding content and linking between pages, close / open page buttons etc.) <br> <br>
-                        3) review the code it spits out (just let the LLM or some indian ytber explain) <br> <br>
-                        4) copy paste the part that seems good enough into your git repo (if you don't know, all in and hope for the best) <br> <br>
-                        5) deploy and check if it works as intented <br> <br>
-                        6) if yes: rinse and repeat step 2 to 5  <br>
-                        -> if not: debug by feeding the error back into the LLM or go on stackoverflow / reddit, repeat until it works
-                        `
+                        textFile: "content/rant_frontend/rant_frontend2"
                     },
                     {
                         type: "text",
-                        textFile: "content/website/website2"
+                        textFile: "content/rant_frontend/rant_frontend3"
                     },
                     {
                         type: "divider"
@@ -395,7 +382,7 @@ export const regionContent = {
                         research fields - you'll find amazing professors and PhDs welcoming our combined single-digit IQ.
                         
                          <br> <br> 
-                        Some late-night research, an extra question after class or even paper request followed by a teacher's response is not nearly as magical as a letter from Hogwarts, but it sure is mighty.
+                        A late-night research session, an extra question after class or even paper request followed by a teacher's response is not nearly as magical as a letter from Hogwarts, but it sure is mighty.
                         After all, you just gained a kind-hearted opportunity to learn from the wizards of the 21st century. Why wield wooden sticks if you can wield science? <br> <br> 
 
                         Which brings us back to our journey into telepathy, started by a single mail:

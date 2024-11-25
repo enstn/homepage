@@ -153,7 +153,7 @@ async function showRegionDetails(region, subpage = null) {
 
     // Load all text content first
     for (const item of content.content) {
-        if (item.type === 'text' && item.textFile) {
+        if ( (item.type === 'text' || item.type === 'highlight') && item.textFile) {
             item.content = await loadTextContent(item.textFile);
         }
     }

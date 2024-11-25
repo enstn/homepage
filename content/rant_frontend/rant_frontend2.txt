@@ -1,0 +1,8 @@
+1) create a github account and a git repo to store your code & host your website on github pages <br> <br> 
+2) pick a LLM of your choice and prompt your intended behaviour of your website. Start with fundamental UI logic first before getting to the design 
+-> (like mouse state detection, embedding content and linking between pages, close / open page buttons etc.) <br> <br>
+3) review the code it spits out (just let the LLM or some indian ytber explain) <br> <br>
+4) copy paste the part that seems good enough into your git repo (if you don't know, all in and hope for the best) <br> <br>
+5) deploy and check if it works as intented <br> <br>
+6) if yes: rinse and repeat step 2 to 5  <br>
+-> if not: debug by feeding the error back into the LLM or go on stackoverflow / reddit, repeat until it works
