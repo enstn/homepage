@@ -13,9 +13,10 @@
 This is code for my [ETH website](https://n.ethz.ch/~lejiang/). The latest working version is 1.0.1. 
 
 ## 1.0.1
-- added version-based cache-control
-- introduced .txt file based content embedding with a js handler
-- fixed colour differences across safari & firefox browsers
+- added version-based cache-control 
+- introduced .txt file based dynamic content loader 
+- fixed colour gradient & opacity differences across safari & firefox browsers 
+- implemented hotkeys for mouseless people (i was procrastinating on uni stuff)
 
 ## ToDo
 - [ ] very simple project progress time-line
