@@ -18,6 +18,7 @@ copies or substantial portions of the Software.
 
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import{ showBox } from './game/game.js';
 
 const size = 1.1;
 
@@ -203,13 +204,15 @@ export class BrainVisualization {
         window.addEventListener('resize', () => this._onResize());
         window.addEventListener('mousemove', (e) => this._onMousemove(e));
         
-        // check mouseclick with raycaster to open site info
+        // check mouseclick with raycaster 
         this.container.addEventListener('click', (e) => {
             this.raycaster.setFromCamera(this.mouse, this.camera);
             this.intersects = this.raycaster.intersectObject(this.brain);
             
             if (this.intersects.length > 0) {
-                showRegionDetails('3');
+                // run game script if mouse click on brain is detected
+                console.log('mouse click detected');
+                showBox();
             }
         });
     }
@@ -237,7 +240,7 @@ export class BrainVisualization {
     }
 
     _onMousemove(e) {
-        // Only process hover effects if info panel is not active or mouse is not over it
+        // Only process hover effects if mouse is not on info panel
         if (this.isInfoPanelActive && this.isMouseOverInfoPanel) {
             if (this.hover) {
                 this.hover = false;

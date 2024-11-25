@@ -3,18 +3,14 @@ Want to build something like this? Easy peasy 🍋 squeezy. Check this out: <br>
 
 Do you have internet? Do you have an okay-ish LLM like ChatGPT at hand? Can you stop scrolling through brainrot for like an hour? Good, that's it. You don't need more. <br> <br>
 
-At the start of this project, I had no idea of HTML or javascript. After getting here, I still have no idea of HTML. You get the gist. 
-<br> <br>
+How did I arrive at this conclusion? Well, in hindsight of my own website developement, the majority of my mental effort was poured into UI logic, page setup & all sorts of error handling while
+the majority of time was wasted on formatting the frontend styling across different browsers. Given how advanced LLMs nowadays are, you can easily off-load both the logic implementation and the 
+design realization. Especially the later part. <br> <br>
 
 I wont deny this tho: knowing general code syntax and having basic coding experience will significantly speed up your workflow.
 Debugging & feature implementation is 100% easier for someone who is familiar with coding procedures.
 Still, the fact remains: you could code this website without any prior coding knowledge. <br> <br>
 
-How did I arrive at this conclusion? Well, in hindsight of my own website developement, the majority of my mental effort was poured into UI logic, page setup & all sorts of error handling while
-the majority of time was wasted on formatting the frontend styling across different browsers. Given how advanced LLMs nowadays are, you can easily off-load both the logic implementation and the 
-design realization. Especially the later part is something I witnessed myself.
-
-<br> <br>
 Thanks to that, you can solely focus on designing your content.
 Here is a crude step-by-step on how I would do it ( if I were to start again without any coding experience ): 
 

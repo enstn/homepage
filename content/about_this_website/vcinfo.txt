@@ -4,7 +4,8 @@ Version-based cookie & cache reset was introduced on the  <span class="text-ital
 Please update the site if you have visited before this date of time by either: <br> <br>
 - reload the page by clicking the title <br> <br>
 - or running following function in your browser console: <span class="text-italic">checkVersion()</span> <br> <br> 
-This will automatically update your version if it is outdated. If you still experience issues, please contact me so I can fix this asap. 
+This will automatically update your version if it is outdated. If you still experience issues, try manually clearing
+your local storage & website caches. Or contact me so I can fix this as soon as possible. 
 You can find my socials in the bottom right corner, choose whatever method you prefer. 
 
 <br> <br>

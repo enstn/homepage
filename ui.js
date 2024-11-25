@@ -2,6 +2,8 @@
 import {regionContent, loadTextContent} from './content.js';
 window.showRegionDetails = showRegionDetails;
 
+let currentSubpage = 0;
+
 export function setupMagneticLegend() {
     const items = document.querySelectorAll('.legend-item');
     const magnetThreshold = 100; // Detection radius in pixels
@@ -92,24 +94,11 @@ export function setupUIInteractions() {
             infoPanel.classList.remove('active');
             legendItems.forEach(i => i.classList.remove('active'));
         });
-    }
-
-    // close with esc
-    if (infoPanel) {
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                const infoPanel = document.getElementById('info-panel');
-                infoPanel.classList.remove('active');
-                document.querySelectorAll('.legend-item').forEach(item => {
-                    item.classList.remove('active');
-                });
-            }
-        });
-    }
+    }}
 
     setupTitleRefresh();
     setupMagneticLegend();
-}
+    setupHotkeyBindings();
 
 function setupTitleRefresh() {
     const siteTitle = document.getElementById('site-title');
@@ -118,8 +107,8 @@ function setupTitleRefresh() {
         siteTitle.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
-            window.location.reload();
             devTools.clearYourMomsCookies();
+            window.location.reload();
         });
     }
 }
@@ -139,17 +128,75 @@ export const devTools = {
         }
 
         console.log('Cookies & caches cleared successfully.')
+
+        localStorage.clear();
+        localStorage.setItem('siteVersion', SITE_VERSION);
+        console.log('Local storage cleared');
     }
 };
 
+// hotkeys function
+function setupHotkeyBindings() {
+    const infoPanel = document.getElementById('info-panel');
+    const legendItems = document.querySelectorAll('.legend-item');
+    
+    // Bind number keys to legend items
+    document.addEventListener('keydown', (e) => {
+        if (e.key === '1') handleHotkey('1');
+        if (e.key === '2') handleHotkey('2');
+        if (e.key === '3') handleHotkey('3');
+        if (e.key === '4') handleHotkey('random');
+        if (e.key === '5') handleHotkey('booklist');
+
+        if (e.key === 'i') handleInfoHotkey();
+        if (e.key === 'v') handleVersionHotkey();
+        if (e.key === 'q') {
+            if (currentSubpage) {
+                const mainRegion = currentSubpage.split('.')[0];
+                currentSubpage = null;
+                showRegionDetails(mainRegion);
+            } else if (infoPanel.classList.contains('active')) {
+                infoPanel.classList.remove('active');
+                legendItems.forEach(i => i.classList.remove('active'));
+            }
+        }
+        
+    });
+
+    function handleHotkey(region) {
+        const item = document.querySelector(`.legend-item[data-region="${region}"]`);
+        if (!item) return;
+        
+        if (item.classList.contains('active') && infoPanel.classList.contains('active')) {
+            return;
+        }
+        legendItems.forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+        showRegionDetails(region);
+    }
+
+    function handleInfoHotkey() {
+        legendItems.forEach(item => item.classList.remove('active'));
+        showRegionDetails('info');
+    }
+
+    function handleVersionHotkey() {
+        legendItems.forEach(item => item.classList.remove('active'));
+        showRegionDetails('info', 'info.1');
+    }
+
+}
+
 // region content stuff
 async function showRegionDetails(region, subpage = null) {
+
     const infoPanel = document.getElementById('info-panel');
     const detailsContainer = document.getElementById('region-details');
     detailsContainer.classList.add('changing');
 
     const mainContent = regionContent[region];
     const content = subpage ? mainContent.subpages[subpage] : mainContent;
+    currentSubpage = subpage; // tracking for hotkey
 
     // Load all text content first
     for (const item of content.content) {
@@ -326,3 +373,4 @@ async function showRegionDetails(region, subpage = null) {
 window.handleRegionLink = function(region) {
     showRegionDetails(region);
 };
+

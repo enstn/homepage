@@ -128,7 +128,19 @@ export const regionContent = {
             },
             {
                 type: "text",
-                content: "... and some other <span class=\"region-link\" data-region=\"random\">random stuff</span> to further increase entropy. This website partially exists to grant my family peace from my eternal yapping."
+                content: `
+                ... and some other <span class=\"region-link\" data-region=\"random\">random stuff</span> to further increase entropy. 
+                Blogging here grants my family peace from my eternal yapping. 
+                If you experience website issues, please check the <span class=\"region-link\" data-region=\"info\" data-subpage=\"info.1\">version control</span>. 
+                `
+            },
+            {
+                type: "highlight",
+                content: `
+                To explore the website, just click on links that peak your interest or the tiny boxes on your left. 
+                <span class=\"region-link\" data-region=\"info\" data-subpage=\"info.2\">Hotkeys</span> are also available.
+                Clicking on the brain might hold a little surprise :) 
+                `
             },
             {
                 type: "list",
@@ -140,17 +152,13 @@ export const regionContent = {
                 ]
             },
             {
-                type: "highlight",
-                content: "To explore the website, just hover over the boxes on your left or click on the links above :)"
-            },
-            {
                 type: "divider"
             },
             {
                 type: "text",
                 content: `
-                Huge shoutout to Francesco Michlini for providing a free brain.glb model and a 3D rendering tutorial. <br>
-                If you experience website issues, check the <span class=\"region-link\" data-region=\"info\" data-subpage=\"info.1\">version control</span>. <br> <br>
+                Huge shoutout to Francesco Michlini for providing a free brain.glb model and a 3D rendering tutorial. Special thanks 
+                to my sister for being the most patient web testclient. <br> <br>
                 Don't scroll down to the end. This is a blatant scroll bait.
                 `
             },
@@ -172,19 +180,39 @@ export const regionContent = {
                 content: [
                     {
                         type: "text",
-                        textFile: "content/vc/vcinfo"
+                        textFile: "content/about_this_website/vcinfo"
                     },
                     {
                         type: "divider"
                     },
                     {
                         type: "highlight",
-                        textFile: "content/vc/vc1"
+                        textFile: "content/about_this_website/vc1"
                     },
                     {
                         type: "highlight",
-                        textFile: "content/vc/vc2"
+                        textFile: "content/about_this_website/vc2"
                     },
+                ]
+            },
+            "info.2": {
+                title: "Hotkeys",
+                accentColor: "rgba(255, 0, 0, 0.69)",
+                subtitle: "not vim-styled, sorry F.K.",
+                content: [
+                    {
+                        type: "list",
+                        title: "the key bindings are as following: ",
+                        items: [
+                            "numbers '1' to '5' => boxes 1 - 5",
+                            "'q' => quit and close current page",
+                            "'i' => information about this website",
+                            "'v' => version control"
+                        ]
+                    },
+                    {
+                        type: "divider"
+                    }
                 ]
             },
         },

@@ -1,3 +1,6 @@
+/* main.css */
+@import url('./game/game.css');
+
 * {
     margin: 0;
     padding: 0;
@@ -80,7 +83,7 @@ body {
 
 .header p:hover {
     color: rgba(255, 0, 0, 1);
-    transform: translateX(1px);
+    transform: translateX(5px);
 }
 
 /* social links */
